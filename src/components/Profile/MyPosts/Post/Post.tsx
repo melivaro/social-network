@@ -6,7 +6,7 @@ type PostType = {
     likesCounter: number,
 }
 
-function Post(props: PostType) {
+export function Post(props: PostType) {
     console.log(props.message);
     debugger;
     return (
@@ -19,5 +19,3 @@ function Post(props: PostType) {
         </div>
     )
 }
-
-export default Post;

@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./Navbar.module.css";
 
-function Navbar() {
+export function Navbar() {
     return (
         <nav className={s.navigation}>
             <ul className={"list"}>
@@ -14,5 +14,3 @@ function Navbar() {
         </nav>
     )
 }
-
-export default Navbar;

@@ -1,8 +1,8 @@
 import React from "react";
-import Post from "./Post/Post";
+import {Post} from "./Post/Post";
 import s from "./MyPosts.module.css";
 
-function MyPosts() {
+export function MyPosts() {
     return (
         <div>
             My posts
@@ -18,5 +18,3 @@ function MyPosts() {
         </div>
     )
 }
-
-export default MyPosts;
