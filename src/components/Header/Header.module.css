@@ -1,9 +1,16 @@
 
 .header {
     grid-area: head;
-    background-color: #9c88ff;
+    background-color: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.3);
+    z-index: 1;
 }
 
 .header img {
-    width: 55px;
+    width: 45px;
+    margin-left: 40px;
+    margin-top: 5px;
+    background-color: #70a1ff;
+    border-radius: 50%;
 }

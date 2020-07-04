@@ -1,9 +1,15 @@
 
 .navigation {
     grid-area: nav;
-    background-color: #8c7ae6;
+    background-color: #ffffff;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.list {
+    margin-right: 30px;
 }
 
 .item {
-    color: #f5f6fa;
+    color: #050505;
+    list-style: none;
 }

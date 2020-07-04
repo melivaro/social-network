@@ -1,5 +1,7 @@
 
 .content {
     grid-area: cont;
-    background-color: #f5f6fa;
+    width: 960px;
+
+    margin: 0 auto;
 }
