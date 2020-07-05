@@ -18,6 +18,6 @@
     text-decoration: none;
 }
 
-.active a {
+a.active {
     color: #1e90ff;
 }

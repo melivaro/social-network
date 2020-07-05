@@ -3,7 +3,6 @@ import s from "./Profile.module.css";
 import {MyPosts} from "./MyPosts/MyPosts";
 
 export function Profile() {
-    debugger
     return (
         <div className={s.content}>
             <div>

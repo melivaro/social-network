@@ -7,8 +7,6 @@ type PostType = {
 }
 
 export function Post(props: PostType) {
-    console.log(props.message);
-    debugger;
     return (
         <div className={s.item}>
             <img src="https://image.freepik.com/free-vector/handdrawn-samurai-logo_78838-23.jpg" alt=""/>
