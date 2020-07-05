@@ -1,7 +1,16 @@
 
 .item {
+    width: 400px;
+
+    margin-top: 40px;
+    padding: 20px;
+
     color: #2f3640;
     font-size: 16px;
+    list-style: none;
+
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
 .item img {

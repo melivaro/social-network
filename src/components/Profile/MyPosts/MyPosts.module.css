@@ -1,0 +1,18 @@
+.myPosts {
+    padding: 10px;
+}
+
+.createPublication textarea {
+    display: block;
+    resize: none;
+}
+
+.createPublication button {
+    display: block;
+    margin-top: 10px;
+}
+
+.postsList {
+    margin: 0;
+    padding: 0;
+}
