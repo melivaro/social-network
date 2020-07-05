@@ -13,9 +13,8 @@ function App() {
                 <Header/>
                 <NavBar/>
                 <div className="app-wrapper-content">
-                    <Profile/>
-                    <Dialogs/>
-                    <Route/>
+                    <Route component={Profile}/>
+                    <Route component={Dialogs}/>
                 </div>
             </div>
         </BrowserRouter>
