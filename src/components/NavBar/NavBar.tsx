@@ -1,7 +1,7 @@
 import React from "react";
-import s from "./Navbar.module.css";
+import s from "./NavBar.module.css";
 
-export function Navbar() {
+export function NavBar() {
     return (
         <nav className={s.navigation}>
             <ul className={s.list}>
