@@ -13,3 +13,7 @@
     color: #050505;
     list-style: none;
 }
+
+.active {
+    color: #1e90ff;
+}
