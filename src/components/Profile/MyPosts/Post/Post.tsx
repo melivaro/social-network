@@ -12,8 +12,9 @@ export function Post(props: PostType) {
     return (
         <div className={s.item}>
             <img src="https://image.freepik.com/free-vector/handdrawn-samurai-logo_78838-23.jpg" alt=""/>
-            {props.message}
+            <p>{props.message}</p>
             <div>
+                <span>like</span>
                 <span>{props.likesCounter}</span>
             </div>
         </div>
