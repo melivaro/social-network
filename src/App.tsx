@@ -10,6 +10,13 @@ import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 
 function App() {
+
+    let arrName = ["Viktor", "Boris", "Matya", "Uliyana"];
+
+    let arrNameAge = arrName.map(name => name === "Boris" || name === "Uliyana" ? "Muhamed" : name)
+    console.log(arrName)
+    console.log(arrNameAge)
+
     return (
         <BrowserRouter>
             <div className="app-wrapper">
@@ -28,3 +35,4 @@ function App() {
 }
 
 export default App;
+

@@ -24,23 +24,31 @@ function MessageItem(props: MessageItemPropsType) {
 }
 
 export function Dialogs() {
+
+    let dialogs = [
+        {id: 1, name: "Max"},
+        {id: 2, name: "Sven"},
+        {id: 3, name: "Jim"},
+        {id: 4, name: "Victor"},
+    ]
+
+    let messages = [
+        {id: 1, message: "Haudy ho!"},
+        {id: 2, message: "YO"},
+        {id: 3, message: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, similique?"},
+        {id: 4, message: "Lorem ipsum dolor sit amet."},
+    ]
+
+    let dialogItems = dialogs.map(d => <DialogItem id={d.id} name={d.name}/>)
+    let messageItems = messages.map(m => <MessageItem text={m.message}/>)
+
     return (
         <div className={s.dialogs}>
             <ul className={s.dialogsList}>
-                <DialogItem id={1} name={"Max"}/>
-                <DialogItem id={2} name={"Anna"}/>
-                <DialogItem id={3} name={"Taisia"}/>
-                <DialogItem id={4} name={"Konstantin"}/>
-                <DialogItem id={5} name={"Andry"}/>
+                {dialogItems}
             </ul>
             <ul className={s.messagesList}>
-                <MessageItem text={"Haudy ho!"}/>
-                <MessageItem text={"YO"}/>
-                <MessageItem text={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, similique?"}/>
-                <MessageItem text={"Haudy ho!"}/>
-                <MessageItem text={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae facere maiores maxime quo ut! Illo quidem rerum similique sit ullam?"}/>
-                <MessageItem text={"Lorem ipsum dolor sit amet."}/>
-                <MessageItem text={"Lorem ipsum dolor sit amet, consectetur adipisicing."}/>
+                {messageItems}
             </ul>
         </div>
     )
