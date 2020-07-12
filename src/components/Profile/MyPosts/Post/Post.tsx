@@ -1,12 +1,11 @@
 import React from "react";
 import s from "./Post.module.css";
+import {PostType} from "../../../../index";
 
-type PostType = {
-    message: string,
-    likesCounter: number,
-}
 
 export function Post(props: PostType) {
+
+
     return (
         <li className={s.item}>
             <img src="https://image.freepik.com/free-vector/handdrawn-samurai-logo_78838-23.jpg" alt=""/>

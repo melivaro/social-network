@@ -8,23 +8,18 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
+import {state} from "./index";
+
 
 function App() {
-
-    let arrName = ["Viktor", "Boris", "Matya", "Uliyana"];
-
-    let arrNameAge = arrName.map(name => name === "Boris" || name === "Uliyana" ? "Muhamed" : name)
-    console.log(arrName)
-    console.log(arrNameAge)
-
     return (
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
                 <NavBar/>
                 <div className="app-wrapper-content">
-                    <Route path={"/profile"} component={Profile}/>
-                    <Route path={"/dialogs"} component={Dialogs}/>
+                    <Route path={"/profile"} render={()=><Profile posts={state.ProfilePage.posts}/>}/>
+                    <Route path={"/dialogs"} render={()=><Dialogs dialogs={state.DialogPage.dialogs} messages={state.DialogPage.messages}/>}/>
                     <Route path={"/news"} component={News}/>
                     <Route path={"/music"} component={Music}/>
                     <Route path={"/settings"} component={Settings}/>
