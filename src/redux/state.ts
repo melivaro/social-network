@@ -23,6 +23,10 @@ export type DialogPageType = {
     messages: Array<MessageItemType>
 }
 
+export type DialogStateType = {
+    dialogState: DialogPageType
+}
+
 export type MainStateType = {
     ProfilePage: ProfilePageType,
     DialogPage: DialogPageType

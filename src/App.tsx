@@ -20,7 +20,7 @@ function App(props: SuperMegaStateType) {
                 <NavBar/>
                 <div className="app-wrapper-content">
                     <Route path={"/profile"} render={()=><Profile posts={props.state.ProfilePage.posts}/>}/>
-                    <Route path={"/dialogs"} render={()=><Dialogs dialogs={props.state.DialogPage.dialogs} messages={props.state.DialogPage.messages}/>}/>
+                    <Route path={"/dialogs"} render={()=><Dialogs dialogState={props.state.DialogPage}/>}/>
                     <Route path={"/news"} component={News}/>
                     <Route path={"/music"} component={Music}/>
                     <Route path={"/settings"} component={Settings}/>
