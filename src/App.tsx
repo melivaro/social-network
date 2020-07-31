@@ -8,19 +8,25 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {SuperMegaStateType} from "./redux/state";
+import {MainStateType} from "./redux/state";
 
+type PropsType = {
+    state:MainStateType
+    addPost:(postMessage: string)=>void
+}
 
+function App(props: PropsType) {
 
-function App(props: SuperMegaStateType) {
     return (
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
                 <NavBar/>
                 <div className="app-wrapper-content">
-                    <Route path={"/profile"} render={()=><Profile posts={props.state.ProfilePage.posts}/>}/>
-                    <Route path={"/dialogs"} render={()=><Dialogs dialogState={props.state.DialogPage}/>}/>
+                    <Route path={"/profile"} render={()=><Profile addPost={props.addPost} posts={props.state.ProfilePage.posts} />}/>
+
+
+                    <Route path={"/dialogs"} render={()=><Dialogs DialogPage={props.state.DialogPage}/>}/>
                     <Route path={"/news"} component={News}/>
                     <Route path={"/music"} component={Music}/>
                     <Route path={"/settings"} component={Settings}/>

@@ -1,17 +1,19 @@
+import {rerenderEntireTree} from "../render";
+
 export type PostType = {
-    id: number,
-    message: string,
-    likesCounter: number,
+    id: number
+    message: string
+    likesCounter: number
 }
 
 export type DialogItemType = {
-    id: number,
-    name: string,
+    id: number
+    name: string
 }
 
 export type MessageItemType = {
-    id: number,
-    message: string,
+    id: number
+    message: string
 }
 
 export type ProfilePageType = {
@@ -19,25 +21,17 @@ export type ProfilePageType = {
 }
 
 export type DialogPageType = {
-    dialogs: Array<DialogItemType>,
+    dialogs: Array<DialogItemType>
     messages: Array<MessageItemType>
 }
 
-export type DialogStateType = {
-    dialogState: DialogPageType
-}
-
 export type MainStateType = {
-    ProfilePage: ProfilePageType,
+    ProfilePage: ProfilePageType
     DialogPage: DialogPageType
+
 }
 
-export type SuperMegaStateType = {
-    state: MainStateType
-}
-
-export let state = {
-
+export let state:MainStateType = {
     ProfilePage: {
         posts: [
             {id: 1, message: "Hi, how are you?", likesCounter: 10},
@@ -45,7 +39,6 @@ export let state = {
             {id: 3, message: "Yo!", likesCounter: 17},
         ]
     },
-
     DialogPage: {
         dialogs: [
             {id: 1, name: "Max"},
@@ -61,4 +54,14 @@ export let state = {
             {id: 4, message: "Lorem ipsum dolor sit amet."},
         ]
     }
+}
+
+export const addPost = (postMessage: string) => {
+    const newPost: PostType = {
+        id: 5,
+        message: postMessage,
+        likesCounter: 0
+    }
+    state.ProfilePage.posts.unshift(newPost)
+    rerenderEntireTree(state, addPost);
 }
