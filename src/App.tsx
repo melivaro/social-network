@@ -12,7 +12,8 @@ import {MainStateType} from "./redux/state";
 
 type PropsType = {
     state:MainStateType
-    addPost:(postMessage: string)=>void
+    addPost:()=>void
+    updateNewPostText: (newText: string) => void
 }
 
 function App(props: PropsType) {
@@ -23,7 +24,7 @@ function App(props: PropsType) {
                 <Header/>
                 <NavBar/>
                 <div className="app-wrapper-content">
-                    <Route path={"/profile"} render={()=><Profile addPost={props.addPost} posts={props.state.ProfilePage.posts} />}/>
+                    <Route path={"/profile"} render={()=><Profile addPost={props.addPost} profilePage={props.state.ProfilePage} updateNewPostText={props.updateNewPostText}/>}/>
 
 
                     <Route path={"/dialogs"} render={()=><Dialogs DialogPage={props.state.DialogPage}/>}/>

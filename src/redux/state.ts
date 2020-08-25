@@ -18,6 +18,7 @@ export type MessageItemType = {
 
 export type ProfilePageType = {
     posts: Array<PostType>
+    newPostText: string
 }
 
 export type DialogPageType = {
@@ -37,7 +38,8 @@ export let state:MainStateType = {
             {id: 1, message: "Hi, how are you?", likesCounter: 10},
             {id: 2, message: "It's my first post", likesCounter: 13},
             {id: 3, message: "Yo!", likesCounter: 17},
-        ]
+        ],
+        newPostText: ""
     },
     DialogPage: {
         dialogs: [
@@ -56,12 +58,18 @@ export let state:MainStateType = {
     }
 }
 
-export const addPost = (postMessage: string) => {
+export const addPost = () => {
     const newPost: PostType = {
         id: 5,
-        message: postMessage,
+        message: state.ProfilePage.newPostText,
         likesCounter: 0
     }
-    state.ProfilePage.posts.unshift(newPost)
-    rerenderEntireTree(state, addPost);
+    state.ProfilePage.posts.unshift(newPost);
+    state.ProfilePage.newPostText = '';
+    rerenderEntireTree(state);
+}
+
+export const updateNewPostText = (newText: string) => {
+    state.ProfilePage.newPostText = newText
+    rerenderEntireTree(state);
 }

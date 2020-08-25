@@ -1,12 +1,14 @@
 import ReactDOM from "react-dom";
 import React from "react";
 import App from "./App";
-import {MainStateType} from "./redux/state";
+import {addPost, MainStateType, updateNewPostText} from "./redux/state";
 
-export const rerenderEntireTree = (state: MainStateType, addPost: (postMessage: string) => void) => {
+// импорт и типизация стэйта функций пропсы
+
+export const rerenderEntireTree = (state: MainStateType) => {
     ReactDOM.render(
         <React.StrictMode>
-            <App state={state} addPost={addPost}/>
+            <App state={state} addPost={addPost} updateNewPostText={updateNewPostText}/>
     </React.StrictMode>,
     document.getElementById('root')
 );
