@@ -1,4 +1,4 @@
-import {rerenderEntireTree} from "../render";
+
 
 export type PostType = {
     id: number
@@ -58,13 +58,19 @@ export let state:MainStateType = {
     }
 }
 
+let rerenderEntireTree=(state: MainStateType)=>{};
+// паттерн observer похож на паттерн publisher-subscriber
+export function subscribe(observer: (state: MainStateType)=>void){
+    rerenderEntireTree = observer;
+}
+
 export const addPost = () => {
     const newPost: PostType = {
         id: 5,
         message: state.ProfilePage.newPostText,
         likesCounter: 0
     }
-    state.ProfilePage.posts.unshift(newPost);
+    state.ProfilePage.posts.push(newPost);
     state.ProfilePage.newPostText = '';
     rerenderEntireTree(state);
 }
