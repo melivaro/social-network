@@ -1,81 +1,136 @@
 
-
 export type PostType = {
     id: number
     message: string
     likesCounter: number
 }
-
 export type DialogItemType = {
     id: number
     name: string
 }
-
 export type MessageItemType = {
     id: number
     message: string
 }
-
 export type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
 }
-
 export type DialogPageType = {
     dialogs: Array<DialogItemType>
     messages: Array<MessageItemType>
+    newMessageText: string
 }
-
 export type MainStateType = {
     ProfilePage: ProfilePageType
     DialogPage: DialogPageType
 
 }
+export type StoreType = {
+    _state: MainStateType
+    _callSubscriber: (state: MainStateType) => void
+    subscribe: (observer: (state: MainStateType) => void) => void
+    getState: () => MainStateType
+    dispatch: (action: ActionsTypes) => void
+}
+export type ActionsTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> | ReturnType<typeof sendMessageActionCreator> | ReturnType<typeof updateNewMessageTextActionCreator>
 
-export let state:MainStateType = {
-    ProfilePage: {
-        posts: [
-            {id: 1, message: "Hi, how are you?", likesCounter: 10},
-            {id: 2, message: "It's my first post", likesCounter: 13},
-            {id: 3, message: "Yo!", likesCounter: 17},
-        ],
-        newPostText: ""
+enum actionConst  {
+    ADD_POST= "ADD_POST",
+    UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT",
+    SEND_MESSAGE = "SEND_MESSAGE",
+    UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT",
+}
+// STORE
+export let store: StoreType = {
+    _state: {
+        ProfilePage: {
+            posts: [
+                {id: 1, message: "Hi, how are you?", likesCounter: 10},
+                {id: 2, message: "It's my first post", likesCounter: 13},
+                {id: 3, message: "Yo!", likesCounter: 17},
+            ],
+            newPostText: ""
+        },
+        DialogPage: {
+            dialogs: [
+                {id: 1, name: "Max"},
+                {id: 2, name: "Sven"},
+                {id: 3, name: "Jim"},
+                {id: 4, name: "Victor"},
+            ],
+
+            messages: [
+                {id: 1, message: "Haudy ho!"},
+                {id: 2, message: "YO"},
+                {id: 3, message: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, similique?"},
+                {id: 4, message: "Lorem ipsum dolor sit amet."},
+            ],
+            newMessageText: ""
+        }
     },
-    DialogPage: {
-        dialogs: [
-            {id: 1, name: "Max"},
-            {id: 2, name: "Sven"},
-            {id: 3, name: "Jim"},
-            {id: 4, name: "Victor"},
-        ],
+    _callSubscriber() {
+        console.log("state changed")
+    },
+    //API - Application program interface
+    subscribe(observer) {
+        this._callSubscriber = observer
+    }, // паттерн observer похож на паттерн publisher-subscriber
+    getState() {
+        return this._state
+    },
 
-        messages: [
-            {id: 1, message: "Haudy ho!"},
-            {id: 2, message: "YO"},
-            {id: 3, message: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, similique?"},
-            {id: 4, message: "Lorem ipsum dolor sit amet."},
-        ]
-    }
+    dispatch(action) {
+        if (action.type === actionConst.ADD_POST) {
+            const newPost = {
+                id: 5,
+                message: this._state.ProfilePage.newPostText,
+                likesCounter: 0
+            }
+            this._state.ProfilePage.posts.push(newPost);
+            this._state.ProfilePage.newPostText = '';
+            this._callSubscriber(this._state);
+        } else if (action.type === actionConst.UPDATE_NEW_POST_TEXT) {
+            this._state.ProfilePage.newPostText = action.newText
+            this._callSubscriber(this._state);
+        } else if (action.type === actionConst.SEND_MESSAGE ){
+            const newMessage = {
+                id: 5,
+                message: this._state.DialogPage.newMessageText,
+            }
+            this._state.DialogPage.messages.push(newMessage)
+            this._state.DialogPage.newMessageText = "";
+            this._callSubscriber(this._state)
+        } else if (action.type === actionConst.UPDATE_NEW_MESSAGE_TEXT) {
+            this._state.DialogPage.newMessageText = action.newMessageText
+            this._callSubscriber(this._state);
+        }
+    },
+
 }
 
-let rerenderEntireTree=(state: MainStateType)=>{};
-// паттерн observer похож на паттерн publisher-subscriber
-export function subscribe(observer: (state: MainStateType)=>void){
-    rerenderEntireTree = observer;
+export const addPostActionCreator = () => {
+    return {
+        type: actionConst.ADD_POST,
+    } as const
 }
 
-export const addPost = () => {
-    const newPost: PostType = {
-        id: 5,
-        message: state.ProfilePage.newPostText,
-        likesCounter: 0
-    }
-    state.ProfilePage.posts.push(newPost);
-    state.ProfilePage.newPostText = '';
-    rerenderEntireTree(state);
+export const updateNewPostTextActionCreator = (text: string) => {
+    return  {
+        type: actionConst.UPDATE_NEW_POST_TEXT,
+        newText: text,
+    } as const
 }
 
-export const updateNewPostText = (newText: string) => {
-    state.ProfilePage.newPostText = newText
-    rerenderEntireTree(state);
+export const sendMessageActionCreator = () => {
+    return {
+        type: actionConst.SEND_MESSAGE,
+    } as const
+}
+
+export const updateNewMessageTextActionCreator = (text: string) => {
+    return {
+        type: actionConst.UPDATE_NEW_MESSAGE_TEXT,
+        newMessageText: text,
+    } as const
 }
