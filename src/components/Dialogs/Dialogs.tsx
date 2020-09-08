@@ -19,18 +19,20 @@ export function Dialogs(props: PropsType) {
     let messageItems = props.DialogPage.messages.map(m => <MessageItem message={m.message} id={m.id}/>)
 
     const newMessageElement = React.createRef<HTMLTextAreaElement>();
+
     const onSendMessageClick = () => {
         props.dispatch(sendMessageActionCreator())
-    }
-    const onChangeMessageText = () => {
-        if (newMessageElement.current) {
-            props.dispatch(updateNewMessageTextActionCreator(newMessageElement.current.value))
-        }
     }
 
     const onSendMessageKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.charCode === 13) {
             onSendMessageClick()
+        }
+    }
+
+    const onChangeMessageText = () => {
+        if (newMessageElement.current) {
+            props.dispatch(updateNewMessageTextActionCreator(newMessageElement.current.value))
         }
     }
 

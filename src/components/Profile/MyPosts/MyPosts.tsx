@@ -12,6 +12,7 @@ type PropsType = {
 
 
 export function MyPosts(props: PropsType) {
+    debugger
     let postItems = props.posts.map(p => <Post id={p.id} message={p.message} likesCounter={p.likesCounter}/>)
 
     const newPostElement = React.createRef<HTMLTextAreaElement>();
@@ -21,20 +22,18 @@ export function MyPosts(props: PropsType) {
         props.dispatch(addPostActionCreator())
     }
 
+    const onKeyAddPostHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.charCode === 13) {
+            addPost()
+        }
+    }
+
     const onPostChange = () => {
         if (newPostElement.current) {
             let text = newPostElement.current.value
             props.dispatch(updateNewPostTextActionCreator(text))
         }
-
     }
-
-    const onKeyAddPostHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.charCode === 13){
-            addPost()
-        }
-    }
-
 
     return (
         <div className={s.myPosts}>

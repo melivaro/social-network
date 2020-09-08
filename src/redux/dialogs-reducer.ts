@@ -8,7 +8,24 @@ enum actionConst {
 
 const {SEND_MESSAGE, UPDATE_NEW_MESSAGE_TEXT} = actionConst
 
-let dialogsReducer = (state: DialogPageType, action: ActionsTypes) => {
+const initialState = {
+    dialogs: [
+        {id: 1, name: "Max"},
+        {id: 2, name: "Sven"},
+        {id: 3, name: "Jim"},
+        {id: 4, name: "Victor"},
+    ],
+
+    messages: [
+        {id: 1, message: "Haudy ho!"},
+        {id: 2, message: "YO"},
+        {id: 3, message: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, similique?"},
+        {id: 4, message: "Lorem ipsum dolor sit amet."},
+    ],
+    newMessageText: ""
+}
+
+let dialogsReducer = (state: DialogPageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
         case SEND_MESSAGE:
             const newMessage = {
