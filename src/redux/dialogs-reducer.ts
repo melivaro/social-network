@@ -1,6 +1,5 @@
 import {ActionsTypes, DialogPageType} from "./store";
 
-
 enum actionConst {
     SEND_MESSAGE = "SEND_MESSAGE",
     UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT",
@@ -34,17 +33,14 @@ let dialogsReducer = (state: DialogPageType = initialState, action: ActionsTypes
             }
             state.messages.push(newMessage)
             state.newMessageText = "";
-            // this._callSubscriber(this._state)
             return state
         case UPDATE_NEW_MESSAGE_TEXT:
             state.newMessageText = action.newMessageText
-            // this._callSubscriber(this._state);
             return state
         default:
             return state
     }
 };
-
 
 export const sendMessageActionCreator = () => {
     return {

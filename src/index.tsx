@@ -11,7 +11,6 @@ export const rerenderEntireTree = (state: MainStateType) => {
     ReactDOM.render(
         <React.StrictMode>
             <BrowserRouter>
-                //@ts-ignore
                 <App store={store}/>
             </BrowserRouter>
         </React.StrictMode>,
@@ -19,8 +18,11 @@ export const rerenderEntireTree = (state: MainStateType) => {
     );
 }
 rerenderEntireTree(store.getState())
-//@ts-ignore
-store.subscribe(rerenderEntireTree)
+
+store.subscribe(()=>{
+    let state = store.getState()
+    rerenderEntireTree(state)
+})
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA

@@ -4,7 +4,9 @@ enum actionConst {
     ADD_POST = "ADD_POST",
     UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT",
 }
+
 const {ADD_POST, UPDATE_NEW_POST_TEXT} = actionConst
+
 const initialState = {
     posts: [
         {id: 1, message: "Hi, how are you?", likesCounter: 10},
@@ -13,7 +15,6 @@ const initialState = {
     ],
     newPostText: ""
 }
-
 
 let profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
@@ -25,11 +26,9 @@ let profileReducer = (state: ProfilePageType = initialState, action: ActionsType
             };
             state.posts.push(newPost);
             state.newPostText = '';
-            // this._callSubscriber(this._state);
             return state;
         case UPDATE_NEW_POST_TEXT:
             state.newPostText = action.newText;
-            // this._callSubscriber(this._state);
             return state;
         default:
             return state

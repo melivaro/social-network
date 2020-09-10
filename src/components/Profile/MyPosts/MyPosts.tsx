@@ -1,37 +1,34 @@
 import React from "react";
 import {Post} from "./Post/Post";
 import s from "./MyPosts.module.css";
-import {ActionsTypes, PostType} from "../../../redux/store";
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/profile-reducer";
+import {ProfilePageType} from "../../../redux/store";
 
 type PropsType = {
-    posts: Array<PostType>
-    newPostText: string
-    dispatch: (action: ActionsTypes) => void
+    addPost: () => void
+    updateNewPostText: (value: string) => void
+    ProfilePage: ProfilePageType
 }
 
-
 export function MyPosts(props: PropsType) {
-    debugger
-    let postItems = props.posts.map(p => <Post id={p.id} message={p.message} likesCounter={p.likesCounter}/>)
+    let postItems = props.ProfilePage.posts.map(p => <Post id={p.id} message={p.message}
+                                                           likesCounter={p.likesCounter}/>)
 
     const newPostElement = React.createRef<HTMLTextAreaElement>();
 
-
-    function addPost() {
-        props.dispatch(addPostActionCreator())
+    function onAddPostHandler() {
+        props.addPost()
     }
 
-    const onKeyAddPostHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const onKeyPressHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.charCode === 13) {
-            addPost()
+            onAddPostHandler()
         }
     }
 
-    const onPostChange = () => {
+    const onPostChangeHandler = () => {
         if (newPostElement.current) {
             let text = newPostElement.current.value
-            props.dispatch(updateNewPostTextActionCreator(text))
+            props.updateNewPostText(text)
         }
     }
 
@@ -40,13 +37,13 @@ export function MyPosts(props: PropsType) {
             <h3>My posts</h3>
             <div className={s.createPublication}>
                 <textarea
-                    onKeyPress={onKeyAddPostHandler}
-                    onChange={onPostChange}
-                    value={props.newPostText}
+                    onKeyPress={onKeyPressHandler}
+                    onChange={onPostChangeHandler}
+                    value={props.ProfilePage.newPostText}
                     ref={newPostElement}
                     placeholder={"Что у вас нового?"}
                 />
-                <button type="submit" onClick={addPost}>Add post</button>
+                <button type="submit" onClick={onAddPostHandler}>Add post</button>
             </div>
             <ul className={s.postsList}>
                 {postItems}
