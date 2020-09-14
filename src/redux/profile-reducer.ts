@@ -7,7 +7,7 @@ enum actionConst {
 
 const {ADD_POST, UPDATE_NEW_POST_TEXT} = actionConst
 
-const initialState = {
+const initialState: ProfilePageType = {
     posts: [
         {id: 1, message: "Hi, how are you?", likesCounter: 10},
         {id: 2, message: "It's my first post", likesCounter: 13},
@@ -40,7 +40,7 @@ let profileReducer = (state: ProfilePageType = initialState, action: ActionsType
 
 export const addPostActionCreator = () => {
     return {
-        type: ADD_POST,
+        type: ADD_POST
     } as const
 }
 

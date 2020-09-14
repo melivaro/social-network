@@ -1,5 +1,6 @@
 import {addPostActionCreator, updateNewPostTextActionCreator} from "./profile-reducer";
 import {sendMessageActionCreator, updateNewMessageTextActionCreator} from "./dialogs-reducer";
+import {followAC, unfollowAC, UserPageType} from "./user-reducer";
 
 export type PostType = {
     id: number
@@ -26,6 +27,7 @@ export type DialogPageType = {
 export type MainStateType = {
     ProfilePage: ProfilePageType
     DialogPage: DialogPageType
+    UserPage: UserPageType
 
 }
 export type StoreType = {
@@ -40,6 +42,8 @@ export type ActionsTypes =
     | ReturnType<typeof updateNewPostTextActionCreator>
     | ReturnType<typeof sendMessageActionCreator>
     | ReturnType<typeof updateNewMessageTextActionCreator>
+    | ReturnType<typeof unfollowAC>
+    | ReturnType<typeof followAC>
 
 enum actionConst  {
     ADD_POST= "ADD_POST",

@@ -7,7 +7,7 @@ enum actionConst {
 
 const {SEND_MESSAGE, UPDATE_NEW_MESSAGE_TEXT} = actionConst
 
-const initialState = {
+const initialState: DialogPageType = {
     dialogs: [
         {id: 1, name: "Max"},
         {id: 2, name: "Sven"},
