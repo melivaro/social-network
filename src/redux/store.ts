@@ -41,12 +41,12 @@ export type ActionsTypes =
     | ReturnType<typeof sendMessageActionCreator>
     | ReturnType<typeof updateNewMessageTextActionCreator>
 
-// enum actionConst  {
-//     ADD_POST= "ADD_POST",
-//     UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT",
-//     SEND_MESSAGE = "SEND_MESSAGE",
-//     UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT",
-// }
+enum actionConst  {
+    ADD_POST= "ADD_POST",
+    UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT",
+    SEND_MESSAGE = "SEND_MESSAGE",
+    UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT",
+}
 
 // export let store: StoreType = {
 //     _state: {
@@ -118,7 +118,7 @@ export type ActionsTypes =
 //     },
 //
 // }
-
+//
 // export const addPostActionCreator = () => {
 //     return {
 //         type: actionConst.ADD_POST,
@@ -131,7 +131,7 @@ export type ActionsTypes =
 //         newText: text,
 //     } as const
 // }
-
+//
 // export const sendMessageActionCreator = () => {
 //     return {
 //         type: actionConst.SEND_MESSAGE,

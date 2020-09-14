@@ -14,7 +14,6 @@ const initialState = {
         {id: 3, name: "Jim"},
         {id: 4, name: "Victor"},
     ],
-
     messages: [
         {id: 1, message: "Haudy ho!"},
         {id: 2, message: "YO"},
@@ -27,16 +26,19 @@ const initialState = {
 let dialogsReducer = (state: DialogPageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
         case SEND_MESSAGE:
-            const newMessage = {
-                id: 5,
-                message: state.newMessageText,
+            return {
+                ...state,
+                messages: [...state.messages, {
+                    id: 6,
+                    message: state.newMessageText,
+                }],
+                newMessageText: "",
             }
-            state.messages.push(newMessage)
-            state.newMessageText = "";
-            return state
         case UPDATE_NEW_MESSAGE_TEXT:
-            state.newMessageText = action.newMessageText
-            return state
+            return {
+                ...state,
+                newMessageText: action.newMessageText,
+            }
         default:
             return state
     }
