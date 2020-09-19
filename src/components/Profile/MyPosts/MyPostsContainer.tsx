@@ -1,56 +1,26 @@
 import React, {Dispatch} from "react";
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/profile-reducer";
+import {
+    addPostActionCreator,
+    ProfileActionType,
+    ProfileInitialStateType,
+    updateNewPostTextActionCreator
+} from "../../../redux/profile-reducer";
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
-import {ActionsTypes, MainStateType, ProfilePageType} from "../../../redux/store";
+import {AppStoreType} from "../../../redux/redux-store";
 
-// type PropsType = {
-//     store: StoreType
-// }
-
-// export function MyPostsContainer() {
-//
-//     return (
-//         <StoreContext.Consumer>
-//             { store => {
-//                 //@ts-ignore
-//                 let state = store.getState().ProfilePage
-//
-//                 function addPost() {
-//                     //@ts-ignore
-//                     store.dispatch(addPostActionCreator())
-//                 }
-//
-//                 const onPostChange = (text: string) => {
-//                     //@ts-ignore
-//                     store.dispatch(updateNewPostTextActionCreator(text))
-//                 }
-//
-//                 //@ts-ignore
-//             return    <MyPosts addPost={addPost} updateNewPostText={onPostChange} ProfilePage={state}/>
-//             }
-//             }
-//         </StoreContext.Consumer>
-//         )
-// }
-
-
-type MapStateToPropsType = (state: MainStateType) => {
-    ProfilePage: ProfilePageType
+type MapStateType = {
+    ProfilePage: ProfileInitialStateType
 }
 
-type MapDispatchToPropsType = (dispatch: Dispatch<ActionsTypes>) => {
+type MapDispatchType = {
     addPost: () => void
     updateNewPostText: (text: string) => void
 }
 
-let mapStateToProps: MapStateToPropsType = (state) => {
-    return {
-        ProfilePage: state.ProfilePage
-    }
-}
+let mapStateToProps = (state: AppStoreType): MapStateType => ({ProfilePage: state.ProfilePage})
 
-let mapDispatchToProps: MapDispatchToPropsType = (dispatch) => {
+let mapDispatchToProps = (dispatch: Dispatch<ProfileActionType>): MapDispatchType => {
     return {
         addPost: () => dispatch(addPostActionCreator()),
         updateNewPostText: (text: string) => dispatch(updateNewPostTextActionCreator(text))

@@ -1,10 +1,9 @@
 import s from "../Dialogs.module.css";
 import React from "react";
-import {MessageItemType} from "../../../redux/store";
 
-export function MessageItem(props: MessageItemType) {
-
-    return (
-        <li className={s.messageItem}>{props.message}</li>
-    )
+export type MessageItemType = {
+    id: number
+    message: string
 }
+
+export const MessageItem: React.FC<MessageItemType> = ({message}) => <li className={s.messageItem}>{message}</li>

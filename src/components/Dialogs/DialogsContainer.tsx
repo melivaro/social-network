@@ -1,55 +1,30 @@
 import React, {Dispatch} from "react";
-import {sendMessageActionCreator, updateNewMessageTextActionCreator} from "../../redux/dialogs-reducer";
+import {
+    DialogsActionType,
+    DialogsInitialStateType,
+    sendMessageActionCreator,
+    updateNewMessageTextActionCreator
+} from "../../redux/dialogs-reducer";
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
-import {ActionsTypes, DialogPageType, MainStateType} from "../../redux/store";
+import {AppStoreType} from "../../redux/redux-store";
 
-// type PropsType = {
-//     store: StoreType
-// }
-
-// export function DialogsContainer() {
-//
-//
-//
-//     return (
-//         <StoreContext.Consumer>
-//             { store => {
-//                 //@ts-ignore
-//                 let state = store.getState().DialogPage;
-//
-//                 const sendMessage = () => {
-//                     //@ts-ignore
-//                     store.dispatch(sendMessageActionCreator())
-//                 }
-//
-//                 const changeMessageText = (text: string) => {
-//                     //@ts-ignore
-//                     store.dispatch(updateNewMessageTextActionCreator(text))
-//                 }
-//                return <Dialogs DialogPage={state} changeMessageText={changeMessageText} sendMessage={sendMessage}/>
-//             }
-//             }
-//         </StoreContext.Consumer>
-//         )
-// }
-
-type MapDispatchToPropsType = (dispatch: Dispatch<ActionsTypes>) => {
+type MapDispatchType = {
     changeMessageText: (text: string) => void
     sendMessage: () => void
 }
 
-type MapStateToPropsType = (state: MainStateType) => {
-    DialogPage: DialogPageType
+type MapStateType = {
+    DialogPage: DialogsInitialStateType
 }
 
-let mapStateToProps: MapStateToPropsType = (state) => {
+let mapStateToProps = (state: AppStoreType): MapStateType  => {
     return {
         DialogPage: state.DialogPage
     }
 }
 
-let mapDispatchToProps: MapDispatchToPropsType = (dispatch) => {
+let mapDispatchToProps = (dispatch: Dispatch<DialogsActionType>): MapDispatchType => {
     return {
         changeMessageText: (text: string) => dispatch(updateNewMessageTextActionCreator(text)),
         sendMessage: () => dispatch(sendMessageActionCreator())

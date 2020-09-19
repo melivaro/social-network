@@ -1,36 +1,26 @@
 import React from "react";
 import {Post} from "./Post/Post";
 import s from "./MyPosts.module.css";
-import {ProfilePageType} from "../../../redux/store";
+import {ProfileInitialStateType} from "../../../redux/profile-reducer";
 
 type PropsType = {
     addPost: () => void
     updateNewPostText: (value: string) => void
-    ProfilePage: ProfilePageType
+    ProfilePage: ProfileInitialStateType
 }
 
-export function MyPosts(props: PropsType) {
-    let postItems = props.ProfilePage.posts.map(p => <Post id={p.id} message={p.message}
-                                                           likesCounter={p.likesCounter}/>)
+export function MyPosts({ProfilePage, addPost, updateNewPostText}: PropsType) {
+
+    let postItems = ProfilePage.posts.map(p => <Post id={p.id} message={p.message}
+                                                     likesCounter={p.likesCounter}/>)
 
     const newPostElement = React.createRef<HTMLTextAreaElement>();
 
-    function onAddPostHandler() {
-        props.addPost()
-    }
+    const onAddPostHandler = () => addPost()
 
-    const onKeyPressHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.charCode === 13) {
-            onAddPostHandler()
-        }
-    }
+    const onKeyPressHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => e.charCode === 13 && onAddPostHandler()
 
-    const onPostChangeHandler = () => {
-        if (newPostElement.current) {
-            let text = newPostElement.current.value
-            props.updateNewPostText(text)
-        }
-    }
+    const onPostChangeHandler = () => newPostElement.current && updateNewPostText(newPostElement.current.value)
 
     return (
         <div className={s.myPosts}>
@@ -39,7 +29,7 @@ export function MyPosts(props: PropsType) {
                 <textarea
                     onKeyPress={onKeyPressHandler}
                     onChange={onPostChangeHandler}
-                    value={props.ProfilePage.newPostText}
+                    value={ProfilePage.newPostText}
                     ref={newPostElement}
                     placeholder={"Что у вас нового?"}
                 />

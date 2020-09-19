@@ -1,56 +1,57 @@
-import {addPostActionCreator, updateNewPostTextActionCreator} from "./profile-reducer";
-import {sendMessageActionCreator, updateNewMessageTextActionCreator} from "./dialogs-reducer";
-import {followAC, unfollowAC, UserPageType} from "./user-reducer";
-
-export type PostType = {
-    id: number
-    message: string
-    likesCounter: number
-}
-export type DialogItemType = {
-    id: number
-    name: string
-}
-export type MessageItemType = {
-    id: number
-    message: string
-}
-export type ProfilePageType = {
-    posts: Array<PostType>
-    newPostText: string
-}
-export type DialogPageType = {
-    dialogs: Array<DialogItemType>
-    messages: Array<MessageItemType>
-    newMessageText: string
-}
-export type MainStateType = {
-    ProfilePage: ProfilePageType
-    DialogPage: DialogPageType
-    UserPage: UserPageType
-
-}
-export type StoreType = {
-    _state: MainStateType
-    _callSubscriber: (state: MainStateType) => void
-    subscribe: (observer: (state: MainStateType) => void) => void
-    getState: () => MainStateType
-    dispatch: (action: ActionsTypes) => void
-}
-export type ActionsTypes =
-    ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof updateNewPostTextActionCreator>
-    | ReturnType<typeof sendMessageActionCreator>
-    | ReturnType<typeof updateNewMessageTextActionCreator>
-    | ReturnType<typeof unfollowAC>
-    | ReturnType<typeof followAC>
-
-enum actionConst  {
-    ADD_POST= "ADD_POST",
-    UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT",
-    SEND_MESSAGE = "SEND_MESSAGE",
-    UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT",
-}
+// import {addPostActionCreator, updateNewPostTextActionCreator} from "./profile-reducer";
+// import {sendMessageActionCreator, updateNewMessageTextActionCreator} from "./dialogs-reducer";
+// import {followAC, setUsersAC, unfollowAC, UsersInitialType} from "./user-reducer";
+//
+// export type PostType = {
+//     id: number
+//     message: string
+//     likesCounter: number
+// }
+// export type DialogItemType = {
+//     id: number
+//     name: string
+// }
+// export type MessageItemType = {
+//     id: number
+//     message: string
+// }
+// export type ProfilePageType = {
+//     posts: Array<PostType>
+//     newPostText: string
+// }
+// export type DialogPageType = {
+//     dialogs: Array<DialogItemType>
+//     messages: Array<MessageItemType>
+//     newMessageText: string
+// }
+// export type MainStateType = {
+//     ProfilePage: ProfilePageType
+//     DialogPage: DialogPageType
+//     UserPage: UsersInitialType
+//
+// }
+// export type StoreType = {
+//     _state: MainStateType
+//     _callSubscriber: (state: MainStateType) => void
+//     subscribe: (observer: (state: MainStateType) => void) => void
+//     getState: () => MainStateType
+//     dispatch: (action: ActionsTypes) => void
+// }
+// export type ActionsTypes =
+//     ReturnType<typeof addPostActionCreator>
+//     | ReturnType<typeof updateNewPostTextActionCreator>
+//     | ReturnType<typeof sendMessageActionCreator>
+//     | ReturnType<typeof updateNewMessageTextActionCreator>
+//     | ReturnType<typeof unfollowAC>
+//     | ReturnType<typeof followAC>
+//     | ReturnType<typeof setUsersAC>
+//
+// enum actionConst  {
+//     ADD_POST= "ADD_POST",
+//     UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT",
+//     SEND_MESSAGE = "SEND_MESSAGE",
+//     UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT",
+// }
 
 // export let store: StoreType = {
 //     _state: {
@@ -148,3 +149,5 @@ enum actionConst  {
 //         newMessageText: text,
 //     } as const
 // }
+
+export default 1

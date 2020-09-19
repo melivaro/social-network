@@ -2,37 +2,26 @@ import React from "react";
 import s from "./Dialogs.module.css"
 import {DialogItem} from "./DialogItem/DialogItem";
 import {MessageItem} from "./MessageItem/MessageItem";
-import {DialogPageType,} from "../../redux/store";
+import {DialogsInitialStateType} from "../../redux/dialogs-reducer";
 
 type PropsType = {
-    DialogPage: DialogPageType
+    DialogPage: DialogsInitialStateType
     sendMessage: () => void
     changeMessageText: (value: string) => void
 }
 
-export function Dialogs(props: PropsType) {
+export function Dialogs({DialogPage, changeMessageText, sendMessage}: PropsType) {
 
-    let dialogItems = props.DialogPage.dialogs.map(d => <DialogItem id={d.id} name={d.name}/>)
-    let messageItems = props.DialogPage.messages.map(m => <MessageItem message={m.message} id={m.id}/>)
+    let dialogItems = DialogPage.dialogs.map((d) => <DialogItem id={d.id} name={d.name}/>)
+    let messageItems = DialogPage.messages.map((m) => <MessageItem message={m.message} id={m.id}/>)
 
     const newMessageElement = React.createRef<HTMLTextAreaElement>();
 
-    const onSendMessageHandler = () => {
-        props.sendMessage()
-    }
+    const onSendMessageHandler = () => sendMessage()
 
-    const onSendMessageKeyPressHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.charCode === 13) {
-            onSendMessageHandler()
-        }
-    }
+    const onSendMessageKeyPressHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => e.charCode === 13 && onSendMessageHandler()
 
-    const onNewMessageChange = () => {
-        if (newMessageElement.current) {
-            let text = newMessageElement.current.value
-            props.changeMessageText(text)
-        }
-    }
+    const onNewMessageChange = () => newMessageElement.current && changeMessageText(newMessageElement.current.value)
 
     return (
         <div className={s.dialogs}>
@@ -45,7 +34,7 @@ export function Dialogs(props: PropsType) {
                     <textarea
                         placeholder="Enter your message"
                         onKeyPress={onSendMessageKeyPressHandler}
-                        value={props.DialogPage.newMessageText}
+                        value={DialogPage.newMessageText}
                         onChange={onNewMessageChange}
                         ref={newMessageElement}
                     />

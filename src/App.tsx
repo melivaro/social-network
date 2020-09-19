@@ -10,10 +10,6 @@ import {Settings} from "./components/Settings/Settings";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {UserContainer} from "./components/Users/UsersContainer";
 
-// type PropsType = {
-//     store: React.PropsWithChildren<any>
-// }
-
 const App: React.FC = () => {
 
     return (

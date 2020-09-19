@@ -1,4 +1,4 @@
-import {ActionsTypes, ProfilePageType} from "./store";
+import {Reducer} from "redux";
 
 enum actionConst {
     ADD_POST = "ADD_POST",
@@ -7,7 +7,7 @@ enum actionConst {
 
 const {ADD_POST, UPDATE_NEW_POST_TEXT} = actionConst
 
-const initialState: ProfilePageType = {
+const initialState = {
     posts: [
         {id: 1, message: "Hi, how are you?", likesCounter: 10},
         {id: 2, message: "It's my first post", likesCounter: 13},
@@ -16,7 +16,20 @@ const initialState: ProfilePageType = {
     newPostText: ""
 }
 
-let profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes) => {
+export type ProfileInitialStateType = typeof initialState
+
+type AddPostActionType = {
+    type: typeof ADD_POST
+}
+
+type UpdateNewPostTextActionType = {
+    type: typeof UPDATE_NEW_POST_TEXT
+    newText: string
+}
+
+export type ProfileActionType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>
+
+export const profileReducer: Reducer<ProfileInitialStateType, ProfileActionType> = (state= initialState, action) => {
     switch (action.type) {
         case ADD_POST:
             return {
@@ -38,17 +51,15 @@ let profileReducer = (state: ProfilePageType = initialState, action: ActionsType
     }
 }
 
-export const addPostActionCreator = () => {
+export const addPostActionCreator = (): AddPostActionType => {
     return {
         type: ADD_POST
     } as const
 }
 
-export const updateNewPostTextActionCreator = (text: string) => {
+export const updateNewPostTextActionCreator = (text: string): UpdateNewPostTextActionType => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newText: text,
     } as const
 }
-
-export default profileReducer

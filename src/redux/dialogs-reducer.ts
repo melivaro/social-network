@@ -1,4 +1,4 @@
-import {ActionsTypes, DialogPageType} from "./store";
+import {Reducer} from "redux";
 
 enum actionConst {
     SEND_MESSAGE = "SEND_MESSAGE",
@@ -7,7 +7,9 @@ enum actionConst {
 
 const {SEND_MESSAGE, UPDATE_NEW_MESSAGE_TEXT} = actionConst
 
-const initialState: DialogPageType = {
+export type DialogsInitialStateType = typeof initialState
+
+const initialState = {
     dialogs: [
         {id: 1, name: "Max"},
         {id: 2, name: "Sven"},
@@ -23,7 +25,20 @@ const initialState: DialogPageType = {
     newMessageText: ""
 }
 
-let dialogsReducer = (state: DialogPageType = initialState, action: ActionsTypes) => {
+type SendMessageACType = {
+    type: typeof SEND_MESSAGE
+}
+
+type UpdateNewMessageTextACType = {
+    type: typeof UPDATE_NEW_MESSAGE_TEXT
+    newMessageText: string
+}
+
+export type DialogsActionType =
+    ReturnType<typeof sendMessageActionCreator>
+    | ReturnType<typeof updateNewMessageTextActionCreator>
+
+export const dialogsReducer: Reducer<DialogsInitialStateType, DialogsActionType> = (state = initialState, action) => {
     switch (action.type) {
         case SEND_MESSAGE:
             return {
@@ -44,17 +59,15 @@ let dialogsReducer = (state: DialogPageType = initialState, action: ActionsTypes
     }
 };
 
-export const sendMessageActionCreator = () => {
+export const sendMessageActionCreator = (): SendMessageACType => {
     return {
         type: SEND_MESSAGE,
     } as const
 }
 
-export const updateNewMessageTextActionCreator = (text: string) => {
+export const updateNewMessageTextActionCreator = (text: string): UpdateNewMessageTextACType => {
     return {
         type: UPDATE_NEW_MESSAGE_TEXT,
         newMessageText: text,
     } as const
 }
-
-export default dialogsReducer;
