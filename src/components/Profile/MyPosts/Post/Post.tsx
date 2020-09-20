@@ -1,11 +1,6 @@
 import React from "react";
 import s from "./Post.module.css";
-
-export type PostType = {
-    id: number
-    message: string
-    likesCounter: number
-}
+import { PostType } from "../../../../types/entities";
 
 export function Post(props: PostType) {
 

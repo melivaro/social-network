@@ -1,13 +1,7 @@
 import {Reducer} from "redux";
+import {InferActionTypes, DialogType, MessageType} from "../types/entities";
 
-enum actionConst {
-    SEND_MESSAGE = "SEND_MESSAGE",
-    UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT",
-}
-
-const {SEND_MESSAGE, UPDATE_NEW_MESSAGE_TEXT} = actionConst
-
-export type DialogsInitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 
 const initialState = {
     dialogs: [
@@ -15,32 +9,19 @@ const initialState = {
         {id: 2, name: "Sven"},
         {id: 3, name: "Jim"},
         {id: 4, name: "Victor"},
-    ],
+    ] as Array<DialogType>,
     messages: [
         {id: 1, message: "Haudy ho!"},
         {id: 2, message: "YO"},
         {id: 3, message: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, similique?"},
         {id: 4, message: "Lorem ipsum dolor sit amet."},
-    ],
+    ] as Array<MessageType>,
     newMessageText: ""
 }
 
-type SendMessageACType = {
-    type: typeof SEND_MESSAGE
-}
-
-type UpdateNewMessageTextACType = {
-    type: typeof UPDATE_NEW_MESSAGE_TEXT
-    newMessageText: string
-}
-
-export type DialogsActionType =
-    ReturnType<typeof sendMessageActionCreator>
-    | ReturnType<typeof updateNewMessageTextActionCreator>
-
-export const dialogsReducer: Reducer<DialogsInitialStateType, DialogsActionType> = (state = initialState, action) => {
+export const dialogsReducer: Reducer<InitialStateType, ActionTypes> = (state  = initialState, action): InitialStateType => {
     switch (action.type) {
-        case SEND_MESSAGE:
+        case "SEND_MESSAGE":
             return {
                 ...state,
                 messages: [...state.messages, {
@@ -49,7 +30,7 @@ export const dialogsReducer: Reducer<DialogsInitialStateType, DialogsActionType>
                 }],
                 newMessageText: "",
             }
-        case UPDATE_NEW_MESSAGE_TEXT:
+        case "UPDATE_NEW_MESSAGE_TEXT":
             return {
                 ...state,
                 newMessageText: action.newMessageText,
@@ -59,15 +40,9 @@ export const dialogsReducer: Reducer<DialogsInitialStateType, DialogsActionType>
     }
 };
 
-export const sendMessageActionCreator = (): SendMessageACType => {
-    return {
-        type: SEND_MESSAGE,
-    } as const
-}
+export type ActionTypes = InferActionTypes<typeof actions>
 
-export const updateNewMessageTextActionCreator = (text: string): UpdateNewMessageTextACType => {
-    return {
-        type: UPDATE_NEW_MESSAGE_TEXT,
-        newMessageText: text,
-    } as const
+export const actions = {
+    sendMessageActionCreator: ()=>({type: "SEND_MESSAGE"}) as const,
+    updateNewMessageTextActionCreator: (text: string)=>({type: "UPDATE_NEW_MESSAGE_TEXT", newMessageText: text}) as const,
 }

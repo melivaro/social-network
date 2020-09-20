@@ -1,9 +1,5 @@
 import s from "../Dialogs.module.css";
 import React from "react";
+import {MessageType} from "../../../types/entities";
 
-export type MessageItemType = {
-    id: number
-    message: string
-}
-
-export const MessageItem: React.FC<MessageItemType> = ({message}) => <li className={s.messageItem}>{message}</li>
+export const MessageItem: React.FC<MessageType> = ({message}) => <li className={s.messageItem}>{message}</li>

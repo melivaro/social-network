@@ -1,12 +1,18 @@
 import React from "react";
-import {UsersInitialType, UserType} from "../../redux/user-reducer";
+import {InitialStateType, } from "../../redux/user-reducer";
 import {UserItem} from "./UserItem";
+import {UserType} from "../../types/entities";
 
-type PropsType = {
-    UserPage: UsersInitialType
+type PropsType = MapStatePropsType & MapDispatchPropsType
+
+export type MapStatePropsType = {
+    UserPage: InitialStateType
+}
+
+export type MapDispatchPropsType = {
     follow: (id: string) => void
     unfollow: (id: string) => void
-    setUsers: (users: Array<UserType>) => void
+    setUsers(users: Array<UserType>): void
 }
 
 export const Users: React.FC<PropsType> = ({UserPage: {users}, follow, setUsers, unfollow}) => {

@@ -1,15 +1,11 @@
 import React from "react";
 import {Post} from "./Post/Post";
 import s from "./MyPosts.module.css";
-import {ProfileInitialStateType} from "../../../redux/profile-reducer";
+import {MapDispatchPropsType, MapStatePropsType} from "./MyPostsContainer";
 
-type PropsType = {
-    addPost: () => void
-    updateNewPostText: (value: string) => void
-    ProfilePage: ProfileInitialStateType
-}
+type PropsType = MapDispatchPropsType & MapStatePropsType
 
-export function MyPosts({ProfilePage, addPost, updateNewPostText}: PropsType) {
+export const MyPosts: React.FC<PropsType> = ({ProfilePage, addPost ,updateNewPostText}) => {
 
     let postItems = ProfilePage.posts.map(p => <Post id={p.id} message={p.message}
                                                      likesCounter={p.likesCounter}/>)

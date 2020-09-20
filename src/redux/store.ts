@@ -1,6 +1,3 @@
-// import {addPostActionCreator, updateNewPostTextActionCreator} from "./profile-reducer";
-// import {sendMessageActionCreator, updateNewMessageTextActionCreator} from "./dialogs-reducer";
-// import {followAC, setUsersAC, unfollowAC, UsersInitialType} from "./user-reducer";
 //
 // export type PostType = {
 //     id: number

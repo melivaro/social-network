@@ -1,37 +1,26 @@
 import {Reducer} from "redux";
+import {InferActionTypes} from "../types/entities";
 
-enum actionConst {
-    ADD_POST = "ADD_POST",
-    UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT",
+export type InitialStateType = typeof initialState
+
+type PostType = {
+    id: number
+    message: string
+    likesCounter: number
 }
-
-const {ADD_POST, UPDATE_NEW_POST_TEXT} = actionConst
 
 const initialState = {
     posts: [
         {id: 1, message: "Hi, how are you?", likesCounter: 10},
         {id: 2, message: "It's my first post", likesCounter: 13},
         {id: 3, message: "Yo!", likesCounter: 17},
-    ],
+    ] as Array<PostType>,
     newPostText: ""
 }
 
-export type ProfileInitialStateType = typeof initialState
-
-type AddPostActionType = {
-    type: typeof ADD_POST
-}
-
-type UpdateNewPostTextActionType = {
-    type: typeof UPDATE_NEW_POST_TEXT
-    newText: string
-}
-
-export type ProfileActionType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>
-
-export const profileReducer: Reducer<ProfileInitialStateType, ProfileActionType> = (state= initialState, action) => {
+export const profileReducer: Reducer<InitialStateType, ActionTypes> = (state = initialState, action): InitialStateType => {
     switch (action.type) {
-        case ADD_POST:
+        case "ADD_POST":
             return {
                 ...state,
                 posts: [...state.posts, {
@@ -41,7 +30,7 @@ export const profileReducer: Reducer<ProfileInitialStateType, ProfileActionType>
                 }],
                 newPostText: ''
             }
-        case UPDATE_NEW_POST_TEXT:
+        case "UPDATE_NEW_POST_TEXT":
             return {
                 ...state,
                 newPostText: action.newText
@@ -51,15 +40,9 @@ export const profileReducer: Reducer<ProfileInitialStateType, ProfileActionType>
     }
 }
 
-export const addPostActionCreator = (): AddPostActionType => {
-    return {
-        type: ADD_POST
-    } as const
-}
+export type ActionTypes = InferActionTypes<typeof actions>
 
-export const updateNewPostTextActionCreator = (text: string): UpdateNewPostTextActionType => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: text,
-    } as const
+export const actions = {
+    addPostActionCreator: () => ({type: "ADD_POST"}) as const,
+    updateNewPostTextActionCreator: (text: string) => ({type: "UPDATE_NEW_POST_TEXT", newText: text}) as const,
 }

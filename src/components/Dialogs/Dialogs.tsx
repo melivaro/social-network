@@ -2,12 +2,17 @@ import React from "react";
 import s from "./Dialogs.module.css"
 import {DialogItem} from "./DialogItem/DialogItem";
 import {MessageItem} from "./MessageItem/MessageItem";
-import {DialogsInitialStateType} from "../../redux/dialogs-reducer";
+import {InitialStateType} from "../../redux/dialogs-reducer";
 
-type PropsType = {
-    DialogPage: DialogsInitialStateType
+type PropsType = MapStatePropsType & MapDispatchPropsType
+
+export type MapDispatchPropsType = {
+    changeMessageText: (text: string) => void
     sendMessage: () => void
-    changeMessageText: (value: string) => void
+}
+
+export type MapStatePropsType = {
+    DialogPage: InitialStateType
 }
 
 export function Dialogs({DialogPage, changeMessageText, sendMessage}: PropsType) {

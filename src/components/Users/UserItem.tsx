@@ -1,5 +1,5 @@
 import React from "react";
-import {UserType} from "../../redux/user-reducer";
+import {UserType} from "../../types/entities";
 
 type PropsType = {
     user: UserType
