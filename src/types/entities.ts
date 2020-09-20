@@ -1,6 +1,4 @@
 
-// Если тип переданный в T является объектом у которого ключ равен строке, а значением является функция, тогда определи (додумай) возвращаемый тип U с помощью оператора infer (где U - возвращаемый action) и верни его, в противном же случае не возвращай ничего (never)
-
 export type InferActionTypes<T> = T extends {[key: string]:(...args: any[])=>infer U}? U : never
 
 export type DialogType = {
@@ -32,3 +30,13 @@ export type UserType = {
 }
 
 
+// import { initialState as DialogsPage } from "../redux/dialogs-reducer"
+// import { initialState as ProfilePage } from "../redux/profile-reducer"
+// import {initialState as UsersPage} from "../redux/user-reducer";
+
+// export type PageType<T> =
+//     T extends "Dialog" ? typeof DialogsPage.dialogs[0]
+//     : T extends "Message" ? typeof DialogsPage.messages[0]
+//         : T extends "Posts" ? typeof ProfilePage.posts[0]
+//             : T extends "User" ? typeof UsersPage.users[0]
+//                 : never

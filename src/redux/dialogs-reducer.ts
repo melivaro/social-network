@@ -19,7 +19,7 @@ const initialState = {
     newMessageText: ""
 }
 
-export const dialogsReducer: Reducer<InitialStateType, ActionTypes> = (state  = initialState, action): InitialStateType => {
+export const dialogsReducer: Reducer<InitialStateType, ActionTypes> = (state = initialState, action): InitialStateType => {
     switch (action.type) {
         case "SEND_MESSAGE":
             return {
