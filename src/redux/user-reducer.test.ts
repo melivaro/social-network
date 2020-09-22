@@ -6,35 +6,51 @@ test("following should be follow", ()=>{
         users: [
             {
                 id: "1",
-                avatar: "https://image.freepik.com/free-vector/handdrawn-samurai-logo_78838-23.jpg",
-                following: false,
-                fullName: "Izolda",
+                uniqueUrlName: "",
+                photos: {
+                    small: "https://image.freepik.com/free-vector/handdrawn-samurai-logo_78838-23.jpg",
+                    large: "",
+                },
+                followed: false,
+                name: "Izolda",
                 status: "cilling",
-                location: {country: "Russia", city: "Novosibirsk"}
+                // location: {country: "Russia", city: "Novosibirsk"}
             },
             {
                 id: "2",
-                avatar: "https://image.freepik.com/free-vector/handdrawn-samurai-logo_78838-23.jpg",
-                following: true,
-                fullName: "Ignat",
+                uniqueUrlName: "",
+                photos: {
+                    small: "https://image.freepik.com/free-vector/handdrawn-samurai-logo_78838-23.jpg",
+                    large: "",
+                },
+                followed: true,
+                name: "Ignat",
                 status: "job",
-                location: {country: "Ukraine", city: "Kiev"}
+                // location: {country: "Ukraine", city: "Kiev"}
             },
             {
                 id: "3",
-                avatar: "https://image.freepik.com/free-vector/handdrawn-samurai-logo_78838-23.jpg",
-                following: false,
-                fullName: "Farhat",
+                uniqueUrlName: "",
+                photos: {
+                    small: "https://image.freepik.com/free-vector/handdrawn-samurai-logo_78838-23.jpg",
+                    large: "",
+                },
+                followed: false,
+                name: "Farhat",
                 status: "how you?",
-                location: {country: "Belarus", city: "Minsk"}
+                // location: {country: "Belarus", city: "Minsk"}
             },
             {
                 id: "4",
-                avatar: "https://image.freepik.com/free-vector/handdrawn-samurai-logo_78838-23.jpg",
-                following: true,
-                fullName: "Amrod",
+                uniqueUrlName: "",
+                photos: {
+                    small: "https://image.freepik.com/free-vector/handdrawn-samurai-logo_78838-23.jpg",
+                    large: "",
+                },
+                followed: true,
+                name: "Amrod",
                 status: "Great job fabrique de italia",
-                location: {country: "Italy", city: "Milan"}
+                // location: {country: "Italy", city: "Milan"}
             },
         ]
     }
@@ -43,5 +59,5 @@ test("following should be follow", ()=>{
 
     const finalState = userReducer(startState, aciton)
 
-    expect(finalState.users[2].following).toBe(true)
+    expect(finalState.users[2].followed).toBe(true)
 })

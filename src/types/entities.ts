@@ -19,14 +19,15 @@ export type PostType = {
 
 export type UserType = {
     id: string
-    fullName: string
-    avatar: string
-    following: boolean
+    name: string
+    uniqueUrlName: string
+    photos: {small: string, large: string}
+    followed: boolean
     status: string
-    location: {
-        country: string
-        city: string
-    }
+    // location: {
+    //     country: string
+    //     city: string
+    // }
 }
 
 
