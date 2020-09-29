@@ -1,8 +1,9 @@
-import {actions, userReducer} from "./user-reducer";
+import {actions, InitialStateType, userReducer} from "./user-reducer";
 
-test("following should be follow", ()=>{
+let startState: InitialStateType;
 
-    const startState = {
+beforeEach(()=>{
+    startState = {
         users: [
             {
                 id: "1",
@@ -52,12 +53,35 @@ test("following should be follow", ()=>{
                 status: "Great job fabrique de italia",
                 // location: {country: "Italy", city: "Milan"}
             },
-        ]
+        ],
+        totalCount: 0,
+        pageSize: 10,
+        currentPage: 1,
     }
+})
+
+test("following should be follow", ()=>{
 
     const aciton = actions.followAC("3")
 
     const finalState = userReducer(startState, aciton)
 
     expect(finalState.users[2].followed).toBe(true)
+})
+
+test("totalCount should be corrected count", ()=>{
+
+    const action = actions.setTotalCountAC(100)
+
+    const  finalState = userReducer(startState, action)
+
+    expect(finalState.totalCount).toBe(100)
+})
+
+test("currentPage should be corrected currentPage number", ()=> {
+    const action = actions.setCurrentPageAC(10)
+
+    const endState = userReducer(startState, action)
+
+    expect(endState.currentPage).toBe(10)
 })
