@@ -3,6 +3,7 @@ import axios from "axios";
 import {UserItem} from "./UserItem";
 import {InitialStateType} from "../../redux/user-reducer";
 import {UserType} from "../../types/entities";
+import s from "./Users.module.css"
 
 export type MapStatePropsType = {
     UserPage: InitialStateType
@@ -11,7 +12,9 @@ export type MapStatePropsType = {
 export type MapDispatchPropsType = {
     follow: (id: string) => void
     unfollow: (id: string) => void
+    setCurrentPage: (p: number) => void
     setUsers(users: Array<UserType>): void
+    setTotalCount(usersCount: number): void
 }
 
 type PropsType = MapStatePropsType & MapDispatchPropsType
@@ -22,27 +25,46 @@ export class Users extends React.Component<PropsType> {
     }
 
     componentDidMount() {
-        alert("Did mount!")
-        axios
-            .get("https://social-network.samuraijs.com/api/1.0/users")
-            .then(response => this.props.setUsers(response.data.items))
+            axios
+                .get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.UserPage.pageSize}&page=${this.props.UserPage.currentPage}`)
+                .then(response => {
+                    this.props.setUsers(response.data.items)
+                    this.props.setTotalCount(response.data.totalCount)
+                })
+
 
     }
 
     componentWillUnmount() {
-        alert("Will unmount")
     }
 
     componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any) {
-        alert("Update")
+    }
+
+
+    setCurrentPage = (pageNumber: number) => {
+        this.props.setCurrentPage(pageNumber)
+        axios
+            .get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.UserPage.pageSize}&page=${pageNumber}`)
+            .then(response => this.props.setUsers(response.data.items))
     }
 
     render: any = () => {
-        console.log(this.props)
+    const page: number = Math.ceil(this.props.UserPage.totalCount / this.props.UserPage.pageSize)
+        const pages: Array<number> = []
+        for (let i = 1; i <= page; i++){
+            pages.push(i)
+        }
+
         return (
-            <div>{this.props.UserPage.users.map((u: any) => {
+            <div>
+                {pages.map(p=><span onClick={()=>this.setCurrentPage(p)} className={p === this.props.UserPage.currentPage ? s.paginationSelected : ""}>{p}</span>)}
+                {this.props.UserPage.users.map((u: any) => {
                 return <UserItem user={u} unfollow={this.props.unfollow} follow={this.props.follow}/>
             })}</div>
         )
     }
+
+
+
 }
