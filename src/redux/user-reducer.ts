@@ -41,10 +41,10 @@ export const userReducer: Reducer<InitialStateType, ActionTypes> = (state = init
 export type ActionTypes = InferActionTypes<typeof actions>
 
 export const actions = {
-    followAC: (userId: string) => ({type: "FOLLOW", userId,} as const),
-    unfollowAC: (userId: string) => ({type: "UNFOLLOW", userId,} as const),
-    setUsersAC: (users: Array<UserType>) => ({type: "SET_USERS", users,} as const),
-    setCurrentPageAC: (currentPage: number) => ({type: "SET_CURRENT_PAGE", currentPage} as const),
-    setTotalCountAC: (usersCount: number) => ({type: "SET_TOTAL_COUNT", usersCount} as const),
+    follow: (userId: string) => ({type: "FOLLOW", userId,} as const),
+    unfollow: (userId: string) => ({type: "UNFOLLOW", userId,} as const),
+    setUsers: (users: Array<UserType>) => ({type: "SET_USERS", users,} as const),
+    setCurrentPage: (currentPage: number) => ({type: "SET_CURRENT_PAGE", currentPage} as const),
+    setTotalCount: (usersCount: number) => ({type: "SET_TOTAL_COUNT", usersCount} as const),
 }
 

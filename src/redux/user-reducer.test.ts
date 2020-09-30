@@ -62,7 +62,7 @@ beforeEach(()=>{
 
 test("following should be follow", ()=>{
 
-    const aciton = actions.followAC("3")
+    const aciton = actions.follow("3")
 
     const finalState = userReducer(startState, aciton)
 
@@ -71,7 +71,7 @@ test("following should be follow", ()=>{
 
 test("totalCount should be corrected count", ()=>{
 
-    const action = actions.setTotalCountAC(100)
+    const action = actions.setTotalCount(100)
 
     const  finalState = userReducer(startState, action)
 
@@ -79,7 +79,7 @@ test("totalCount should be corrected count", ()=>{
 })
 
 test("currentPage should be corrected currentPage number", ()=> {
-    const action = actions.setCurrentPageAC(10)
+    const action = actions.setCurrentPage(10)
 
     const endState = userReducer(startState, action)
 

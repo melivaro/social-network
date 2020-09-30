@@ -53,13 +53,9 @@ export class UsersAPIComponent extends React.Component<PropsType> {
     }
 }
 
+const {setCurrentPage, setTotalCount, follow, setUsers, unfollow} = actions
+
 let mapStateToProps = (state: AppStateType): MapStatePropsType => ({UserPage: state.UserPage})
 
-export const UserContainer = connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {
-    follow: actions.followAC,
-    unfollow: actions.unfollowAC,
-    setUsers: actions.setUsersAC,
-    setCurrentPage: actions.setCurrentPageAC,
-    setTotalCount: actions.setTotalCountAC
-})(UsersAPIComponent);
+export const UserContainer = connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {follow, unfollow, setUsers, setCurrentPage, setTotalCount,})(UsersAPIComponent);
 
