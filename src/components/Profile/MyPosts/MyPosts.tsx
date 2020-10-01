@@ -7,7 +7,7 @@ type PropsType = MapDispatchPropsType & MapStatePropsType
 
 export const MyPosts: React.FC<PropsType> = ({ProfilePage, addPost ,updateNewPostText}) => {
 
-    let postItems = ProfilePage.posts.map(p => <Post id={p.id} message={p.message}
+    let postItems = ProfilePage.posts.map(p => <Post key={p.id} id={p.id} message={p.message}
                                                      likesCounter={p.likesCounter}/>)
 
     const newPostElement = React.createRef<HTMLTextAreaElement>();

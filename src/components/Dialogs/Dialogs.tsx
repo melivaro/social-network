@@ -17,8 +17,8 @@ export type MapStatePropsType = {
 
 export function Dialogs({DialogPage, changeMessageText, sendMessage}: PropsType) {
 
-    let dialogItems = DialogPage.dialogs.map((d) => <DialogItem id={d.id} name={d.name}/>)
-    let messageItems = DialogPage.messages.map((m) => <MessageItem message={m.message} id={m.id}/>)
+    let dialogItems = DialogPage.dialogs.map((d) => <DialogItem key={d.id} id={d.id} name={d.name}/>)
+    let messageItems = DialogPage.messages.map((m) => <MessageItem key={m.id} message={m.message} id={m.id}/>)
 
     const newMessageElement = React.createRef<HTMLTextAreaElement>();
 

@@ -1,15 +1,20 @@
-import {PostType} from "../types/entities";
-import {actions, profileReducer} from "./profile-reducer";
+import {PostType, ProfileType} from "../types/entities";
+import {actions, InitialStateType, profileReducer} from "./profile-reducer";
 
-test("newPostText should be correct string change", ()=>{
-    const startState = {
+let startState: InitialStateType;
+beforeEach(() => {
+    startState = {
         posts: [
             {id: 1, message: "Hi, how are you?", likesCounter: 10},
             {id: 2, message: "It's my first post", likesCounter: 13},
             {id: 3, message: "Yo!", likesCounter: 17},
         ] as Array<PostType>,
-        newPostText: ""
+        newPostText: "",
+        profile: {} as ProfileType,
     }
+})
+
+test("newPostText should be correct string change", () => {
 
     const action = actions.updateNewPostTextActionCreator("beer")
 
@@ -21,18 +26,11 @@ test("newPostText should be correct string change", ()=>{
 
 test("posts should be new length array", ()=>{
 
-    const startState = {
-        posts: [
-            {id: 1, message: "Hi, how are you?", likesCounter: 10},
-            {id: 2, message: "It's my first post", likesCounter: 13},
-            {id: 3, message: "Yo!", likesCounter: 17},
-        ] as Array<PostType>,
-        newPostText: "hugo"
-    }
+    const preStartState = profileReducer(startState, actions.updateNewPostTextActionCreator("hugo"))
 
     const action = actions.addPostActionCreator()
 
-    const finalState = profileReducer(startState, action)
+    const finalState = profileReducer(preStartState, action)
 
     expect(finalState.posts.length).toBe(4)
     expect(finalState.posts[3].message).toBe("hugo")

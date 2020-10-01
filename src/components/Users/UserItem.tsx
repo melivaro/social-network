@@ -1,6 +1,7 @@
 import React from "react";
 import {UserType} from "../../types/entities";
 import userPhoto from "../../assets/images/ContraAV.jpg"
+import {NavLink} from "react-router-dom";
 
 type PropsType = {
     user: UserType
@@ -16,7 +17,7 @@ export const UserItem: React.FC<PropsType> = ({user, follow, unfollow}) => {
 
     return (
         <div>
-            <img src={small !== null ? small : userPhoto} alt="" width={100} height={100}/>
+            <NavLink to={"/profile/" + id}><img src={small !== null ? small : userPhoto} alt="" width={100} height={100}/></NavLink>
             <div>{name}</div>
             <div>{status}</div>
             {/*<div>{`${country} ${city}`}</div>*/}

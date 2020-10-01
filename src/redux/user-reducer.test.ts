@@ -57,6 +57,7 @@ beforeEach(()=>{
         totalCount: 0,
         pageSize: 10,
         currentPage: 1,
+        isFetching: false,
     }
 })
 

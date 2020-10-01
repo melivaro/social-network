@@ -1,5 +1,5 @@
 import {Reducer} from "redux";
-import {InferActionTypes} from "../types/entities";
+import {InferActionTypes, ProfileType} from "../types/entities";
 
 export type InitialStateType = typeof initialState
 
@@ -15,7 +15,8 @@ const initialState = {
         {id: 2, message: "It's my first post", likesCounter: 13},
         {id: 3, message: "Yo!", likesCounter: 17},
     ] as Array<PostType>,
-    newPostText: ""
+    newPostText: "",
+    profile: {} as ProfileType,
 }
 
 export const profileReducer: Reducer<InitialStateType, ActionTypes> = (state = initialState, action): InitialStateType => {
@@ -35,6 +36,10 @@ export const profileReducer: Reducer<InitialStateType, ActionTypes> = (state = i
                 ...state,
                 newPostText: action.newText
             }
+        case "SET_USER_PROFILE":
+            return {
+                ...state, profile: action.profile
+            }
         default:
             return state
     }
@@ -45,4 +50,5 @@ export type ActionTypes = InferActionTypes<typeof actions>
 export const actions = {
     addPostActionCreator: () => ({type: "ADD_POST"}) as const,
     updateNewPostTextActionCreator: (text: string) => ({type: "UPDATE_NEW_POST_TEXT", newText: text}) as const,
+    setUserProfile: (profile: ProfileType) => ({type: "SET_USER_PROFILE", profile}) as const,
 }

@@ -2,6 +2,7 @@ import React from "react";
 import {UserItem} from "./UserItem";
 import s from "./Users.module.css"
 import {InitialStateType} from "../../redux/user-reducer";
+import {UserType} from "../../types/entities";
 
 type PropsType = {
     UserPage: InitialStateType
@@ -34,10 +35,8 @@ export const Users: React.FC<PropsType> = (
 
     return (
         <div>
-            {pages.map(p => <span onClick={() => setCurrentPage(p)}
+            {pages.map((p) => <span key={p.toString()} onClick={() => setCurrentPage(p)}
                                   className={p === currentPage ? s.paginationSelected : ""}>{p}</span>)}
-            {users.map((u: any) => {
-                return <UserItem user={u} unfollow={unfollow} follow={follow}/>
-            })}</div>
+            {users.map((u: UserType) => <UserItem key={u.id} user={u} unfollow={unfollow} follow={follow}/>)}</div>
     )
 }

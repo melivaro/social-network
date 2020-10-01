@@ -6,6 +6,7 @@ export type InitialStateType = {
     totalCount: number
     pageSize: number
     currentPage: number
+    isFetching: boolean
 }
 
 const initialState: InitialStateType = {
@@ -13,6 +14,7 @@ const initialState: InitialStateType = {
     totalCount: 0,
     pageSize: 10,
     currentPage: 1,
+    isFetching: true,
 }
 
 export const userReducer: Reducer<InitialStateType, ActionTypes> = (state = initialState, action): InitialStateType => {
@@ -33,6 +35,8 @@ export const userReducer: Reducer<InitialStateType, ActionTypes> = (state = init
             return {...state, currentPage: action.currentPage}
         case "SET_TOTAL_COUNT":
             return {...state, totalCount: action.usersCount}
+        case "SET_LOADER":
+            return {...state, isFetching: action.isFetching}
         default:
             return state
     }
@@ -46,5 +50,6 @@ export const actions = {
     setUsers: (users: Array<UserType>) => ({type: "SET_USERS", users,} as const),
     setCurrentPage: (currentPage: number) => ({type: "SET_CURRENT_PAGE", currentPage} as const),
     setTotalCount: (usersCount: number) => ({type: "SET_TOTAL_COUNT", usersCount} as const),
+    setLoader: (isFetching: boolean) => ({type: "SET_LOADER", isFetching} as const),
 }
 

@@ -1,6 +1,28 @@
 
 export type InferActionTypes<T> = T extends {[key: string]:(...args: any[])=>infer U}? U : never
 
+export type ProfileType = {
+    "aboutMe": string
+    "contacts": {
+        "facebook": string
+        "website": string
+        "vk": string
+        "twitter": string
+        "instagram": string
+        "youtube": string
+        "github": string
+        "mainLink": string
+    }
+    "lookingForAJob": string
+    "lookingForAJobDescription": string
+    "fullName": string
+    "userId": number
+    "photos": {
+        "small": string
+        "large": string
+    }
+}
+
 export type DialogType = {
     id: number
     name: string
