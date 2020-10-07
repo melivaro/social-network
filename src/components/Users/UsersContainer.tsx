@@ -3,10 +3,9 @@ import {connect} from "react-redux";
 import {actions, InitialStateType} from "../../redux/user-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {UserType} from "../../types/entities";
-import axios from "axios";
 import {Users} from "./Users";
 import {Loader} from "../common/Loader/Loader";
-import {getUsers} from "../../api/api";
+import {usersAPI} from "../../api/api";
 
 export type MapStatePropsType = {
     UserPage: InitialStateType
@@ -23,6 +22,8 @@ export type MapDispatchPropsType = {
 
 type PropsType = MapStatePropsType & MapDispatchPropsType
 
+const {postFollow, deleteUnfollow, getCurrentPage, getUsers} = usersAPI
+
 export class UsersAPIComponent extends React.Component<PropsType> {
     constructor(props: any) {
         super(props);
@@ -31,50 +32,41 @@ export class UsersAPIComponent extends React.Component<PropsType> {
     componentDidMount() {
         this.props.setLoader(true)
         getUsers(this.props.UserPage.pageSize, this.props.UserPage.currentPage)
-            .then(response => {
+            .then(data => {
                 this.props.setLoader(false)
-                this.props.setUsers(response.data.items)
-                this.props.setTotalCount(response.data.totalCount)
+                this.props.setUsers(data.items)
+                this.props.setTotalCount(data.totalCount)
             })
 
 
-    }
-
-    baseURL = "https://social-network.samuraijs.com/api/1.0/"
-    setFollow = (id: number) => {
-        axios.post(`${this.baseURL}follow/${id}`, {},{withCredentials: true, headers: {
-                'API-KEY': 'fe73a3ea-2d16-48b8-bac3-a0d380e5c9ca'
-            }
-        })
-            .then(response => {
-                if(response.data.resultCode === 0){
-              this.props.follow(id)
-                }
-            })
-    }
-
-    setUnfollow = (id: number) => {
-        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${id}`, {withCredentials: true, headers: {
-                'API-KEY': 'fe73a3ea-2d16-48b8-bac3-a0d380e5c9ca'
-            }
-        })
-            .then(response => {
-                response.data.resultCode === 0 && this.props.unfollow(id)
-            })
     }
 
     setCurrentPage = (pageNumber: number) => {
         this.props.setLoader(true)
         this.props.setCurrentPage(pageNumber)
-        axios
-            .get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.UserPage.pageSize}&page=${pageNumber}`,{
-                withCredentials: true
-            })
-            .then(response => {
+        getCurrentPage(this.props.UserPage.pageSize, pageNumber)
+            .then(data => {
                 this.props.setLoader(false)
-                this.props.setUsers(response.data.items)
+                this.props.setUsers(data.items)
             })
     }
+
+    setFollow = (id: number) => {
+        postFollow(id)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    this.props.follow(id)
+                }
+            })
+    }
+
+    setUnfollow = (id: number) => {
+        deleteUnfollow(id)
+            .then(data => {
+                data.resultCode === 0 && this.props.unfollow(id)
+            })
+    }
+
 
     render() {
         return <>
