@@ -5,12 +5,25 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.3);
     z-index: 1;
+
+    display: flex;
+    justify-content: space-between;
 }
 
 .header img {
-    width: 45px;
+    width: 50px;
+    height: 50px;
     margin-left: 40px;
     margin-top: 5px;
     background-color: #70a1ff;
     border-radius: 50%;
+}
+
+.loginBlock {
+    margin: 20px 50px 0 0;
+}
+
+.loginBlock a {
+    color: #70a1ff;
+    text-decoration: none;
 }

@@ -1,4 +1,4 @@
-import {actions, dialogsReducer, InitialStateType} from "./dialogs-reducer";
+import {actions, dialogsReducer, InitialStateType} from "../redux/dialogs-reducer";
 import {DialogType, MessageType} from "../types/entities";
 
 test("newMessageText should be correct string", ()=>{

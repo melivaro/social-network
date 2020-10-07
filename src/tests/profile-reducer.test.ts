@@ -1,5 +1,5 @@
 import {PostType, ProfileType} from "../types/entities";
-import {actions, InitialStateType, profileReducer} from "./profile-reducer";
+import {actions, InitialStateType, profileReducer} from "../redux/profile-reducer";
 
 let startState: InitialStateType;
 beforeEach(() => {

@@ -7,8 +7,8 @@ import {UserType} from "../../types/entities";
 type PropsType = {
     UserPage: InitialStateType
     setCurrentPage: (p: number) => void
-    follow: (userId: string) => void
-    unfollow: (userId: string) => void
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
 
 }
 

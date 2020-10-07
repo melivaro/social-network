@@ -1,4 +1,4 @@
-import {actions, InitialStateType, userReducer} from "./user-reducer";
+import {actions, InitialStateType, userReducer} from "../redux/user-reducer";
 
 let startState: InitialStateType;
 
@@ -6,7 +6,7 @@ beforeEach(()=>{
     startState = {
         users: [
             {
-                id: "1",
+                id: 1,
                 uniqueUrlName: "",
                 photos: {
                     small: "https://image.freepik.com/free-vector/handdrawn-samurai-logo_78838-23.jpg",
@@ -18,7 +18,7 @@ beforeEach(()=>{
                 // location: {country: "Russia", city: "Novosibirsk"}
             },
             {
-                id: "2",
+                id: 2,
                 uniqueUrlName: "",
                 photos: {
                     small: "https://image.freepik.com/free-vector/handdrawn-samurai-logo_78838-23.jpg",
@@ -30,7 +30,7 @@ beforeEach(()=>{
                 // location: {country: "Ukraine", city: "Kiev"}
             },
             {
-                id: "3",
+                id: 3,
                 uniqueUrlName: "",
                 photos: {
                     small: "https://image.freepik.com/free-vector/handdrawn-samurai-logo_78838-23.jpg",
@@ -42,7 +42,7 @@ beforeEach(()=>{
                 // location: {country: "Belarus", city: "Minsk"}
             },
             {
-                id: "4",
+                id: 4,
                 uniqueUrlName: "",
                 photos: {
                     small: "https://image.freepik.com/free-vector/handdrawn-samurai-logo_78838-23.jpg",
@@ -63,7 +63,7 @@ beforeEach(()=>{
 
 test("following should be follow", ()=>{
 
-    const aciton = actions.follow("3")
+    const aciton = actions.follow(3)
 
     const finalState = userReducer(startState, aciton)
 

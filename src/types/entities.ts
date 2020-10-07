@@ -40,7 +40,7 @@ export type PostType = {
 }
 
 export type UserType = {
-    id: string
+    id: number
     name: string
     uniqueUrlName: string
     photos: {small: string, large: string}

@@ -5,8 +5,8 @@ import {NavLink} from "react-router-dom";
 
 type PropsType = {
     user: UserType
-    follow: (id: string)=> void
-    unfollow: (id: string)=> void
+    follow: (id: number)=> void
+    unfollow: (id: number)=> void
 }
 
 export const UserItem: React.FC<PropsType> = ({user, follow, unfollow}) => {
