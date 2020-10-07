@@ -7,6 +7,7 @@ export type InitialStateType = {
     pageSize: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: Array<number>
 }
 
 const initialState: InitialStateType = {
@@ -15,6 +16,7 @@ const initialState: InitialStateType = {
     pageSize: 10,
     currentPage: 1,
     isFetching: true,
+    followingInProgress: []
 }
 
 export const userReducer: Reducer<InitialStateType, ActionTypes> = (state = initialState, action): InitialStateType => {
@@ -37,6 +39,8 @@ export const userReducer: Reducer<InitialStateType, ActionTypes> = (state = init
             return {...state, totalCount: action.usersCount}
         case "SET_LOADER":
             return {...state, isFetching: action.isFetching}
+        case "SET_DISABLED":
+            return {...state, followingInProgress: action.isFetching? [...state.followingInProgress, action.userId] : state.followingInProgress.filter(id=> id != action.userId)}
         default:
             return state
     }
@@ -51,5 +55,6 @@ export const actions = {
     setCurrentPage: (currentPage: number) => ({type: "SET_CURRENT_PAGE", currentPage} as const),
     setTotalCount: (usersCount: number) => ({type: "SET_TOTAL_COUNT", usersCount} as const),
     setLoader: (isFetching: boolean) => ({type: "SET_LOADER", isFetching} as const),
+    setDisabled: (isFetching: boolean, userId: number) => ({type: "SET_DISABLED", isFetching, userId} as const),
 }
 

@@ -7,9 +7,10 @@ type PropsType = {
     user: UserType
     follow: (id: number)=> void
     unfollow: (id: number)=> void
+    followingInProgress: Array<number>
 }
 
-export const UserItem: React.FC<PropsType> = ({user, follow, unfollow}) => {
+export const UserItem: React.FC<PropsType> = ({user, follow, unfollow, followingInProgress}) => {
     const {id, followed, name, uniqueUrlName, status, large, small} = {...user, ...user.photos}
 
     let onFollowButton = () => follow(id)
@@ -21,8 +22,8 @@ export const UserItem: React.FC<PropsType> = ({user, follow, unfollow}) => {
             <div>{name}</div>
             <div>{status}</div>
             {/*<div>{`${country} ${city}`}</div>*/}
-            {followed ? <button onClick={onUnfollowButton}>unfollow</button> :
-                <button onClick={onFollowButton}>follow</button>}
+            {followed ? <button disabled={followingInProgress.some(uId=> uId === id)} onClick={onUnfollowButton}>unfollow</button> :
+                <button disabled={followingInProgress.some(uId=> uId === id)} onClick={onFollowButton}>follow</button>}
         </div>
     )
 }

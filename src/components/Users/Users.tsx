@@ -9,7 +9,6 @@ type PropsType = {
     setCurrentPage: (p: number) => void
     follow: (userId: number) => void
     unfollow: (userId: number) => void
-
 }
 
 export const Users: React.FC<PropsType> = (
@@ -17,7 +16,7 @@ export const Users: React.FC<PropsType> = (
         UserPage,
         unfollow,
         follow,
-        setCurrentPage // отправить текущую страницу пагинации
+        setCurrentPage, // отправить текущую страницу пагинации
     }
 ) => {
     const {
@@ -37,6 +36,6 @@ export const Users: React.FC<PropsType> = (
         <div>
             {pages.map((p) => <span key={p.toString()} onClick={() => setCurrentPage(p)}
                                   className={p === currentPage ? s.paginationSelected : ""}>{p}</span>)}
-            {users.map((u: UserType) => <UserItem key={u.id} user={u} unfollow={unfollow} follow={follow}/>)}</div>
+            {users.map((u: UserType) => <UserItem key={u.id} followingInProgress={UserPage.followingInProgress} user={u} unfollow={unfollow} follow={follow}/>)}</div>
     )
 }

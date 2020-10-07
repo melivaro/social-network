@@ -15,6 +15,14 @@ export const initialState: InitialStateType = {
     isAuth: false,
 }
 
+export type DataType = {
+    id: number | null
+    login: string | null
+    email: string | null
+}
+
+export type ActionTypes = InferActionTypes<typeof actions>
+
 export const authReducer: Reducer<InitialStateType, ActionTypes> = (state = initialState, action): InitialStateType => {
 
     switch (action.type) {
@@ -24,14 +32,6 @@ export const authReducer: Reducer<InitialStateType, ActionTypes> = (state = init
         default:
             return state
     }
-}
-
-export type ActionTypes = InferActionTypes<typeof actions>
-
-export type DataType = {
-    id: number | null
-    login: string | null
-    email: string | null
 }
 
 export const actions = {

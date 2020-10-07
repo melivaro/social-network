@@ -18,6 +18,7 @@ export type MapDispatchPropsType = {
     setUsers(users: Array<UserType>): void
     setTotalCount(usersCount: number): void
     setLoader: (isFetching: boolean) => void
+    setDisabled: (isFetching: boolean, userId: number) => void
 }
 
 type PropsType = MapStatePropsType & MapDispatchPropsType
@@ -52,18 +53,22 @@ export class UsersAPIComponent extends React.Component<PropsType> {
     }
 
     setFollow = (id: number) => {
+        this.props.setDisabled(true, id)
         postFollow(id)
             .then(data => {
                 if (data.resultCode === 0) {
                     this.props.follow(id)
+                    this.props.setDisabled(false, id)
                 }
             })
     }
 
     setUnfollow = (id: number) => {
+        this.props.setDisabled(true, id)
         deleteUnfollow(id)
             .then(data => {
                 data.resultCode === 0 && this.props.unfollow(id)
+                this.props.setDisabled(false, id)
             })
     }
 
@@ -81,7 +86,7 @@ export class UsersAPIComponent extends React.Component<PropsType> {
     }
 }
 
-const {setCurrentPage, setTotalCount, follow, setUsers, unfollow, setLoader} = actions
+const {setCurrentPage, setTotalCount, follow, setUsers, unfollow, setLoader, setDisabled} = actions
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => ({UserPage: state.UserPage})
 
@@ -91,6 +96,7 @@ export const UserContainer = connect<MapStatePropsType, MapDispatchPropsType, {}
     setUsers,
     setCurrentPage,
     setTotalCount,
-    setLoader
+    setLoader,
+    setDisabled,
 })(UsersAPIComponent);
 
