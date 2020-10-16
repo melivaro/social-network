@@ -63,7 +63,7 @@ beforeEach(()=>{
 
 test("following should be follow", ()=>{
 
-    const aciton = actions.follow(3)
+    const aciton = actions.followSuccess(3)
 
     const finalState = userReducer(startState, aciton)
 

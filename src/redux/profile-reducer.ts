@@ -1,5 +1,7 @@
 import {Reducer} from "redux";
 import {InferActionTypes, ProfileType} from "../types/entities";
+import {profileAPI} from "../api/api";
+import {AppThunk} from "./redux-store";
 
 export type InitialStateType = typeof initialState
 
@@ -52,4 +54,15 @@ export const actions = {
     addPostActionCreator: () => ({type: "ADD_POST"}) as const,
     updateNewPostTextActionCreator: (text: string) => ({type: "UPDATE_NEW_POST_TEXT", newText: text}) as const,
     setUserProfile: (profile: ProfileType) => ({type: "SET_USER_PROFILE", profile}) as const,
+}
+
+export const thunks = {
+    profileTC: (matchParamsUserId: string): AppThunk => dispatch => {
+        let userId = matchParamsUserId
+        !userId && (userId = "2")
+        profileAPI.getProfile(Number(userId))
+            .then(data => {
+                dispatch(actions.setUserProfile(data))
+            })
+    }
 }

@@ -23,7 +23,8 @@ export const Users: React.FC<PropsType> = (
         pageSize, // кол-во отображаемых пользовательей на одной странице
         currentPage, // выбранная страница
         users, // массив пользователей
-        totalCount // общее кол-во зарегестрированных пользовательей
+        totalCount, // общее кол-во зарегестрированных пользовательей
+        followingInProgress,
     } = UserPage
 
     const page: number = Math.ceil(totalCount / pageSize)
@@ -36,6 +37,6 @@ export const Users: React.FC<PropsType> = (
         <div>
             {pages.map((p) => <span key={p.toString()} onClick={() => setCurrentPage(p)}
                                   className={p === currentPage ? s.paginationSelected : ""}>{p}</span>)}
-            {users.map((u: UserType) => <UserItem key={u.id} followingInProgress={UserPage.followingInProgress} user={u} unfollow={unfollow} follow={follow}/>)}</div>
+            {users.map((u: UserType) => <UserItem key={u.id} followingInProgress={followingInProgress} user={u} unfollow={unfollow} follow={follow}/>)}</div>
     )
 }

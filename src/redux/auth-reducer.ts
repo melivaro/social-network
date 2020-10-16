@@ -1,5 +1,7 @@
 import {InferActionTypes} from "../types/entities";
-import { Reducer } from "redux";
+import {Reducer} from "redux";
+import {authAPI} from "../api/api";
+import {AppThunk} from "./redux-store";
 
 export type InitialStateType = {
     id: number | null
@@ -35,5 +37,12 @@ export const authReducer: Reducer<InitialStateType, ActionTypes> = (state = init
 }
 
 export const actions = {
-    setAuthUserData: (data: DataType)=> ({type: "SET_USER_DATA", data} as const),
+    setAuthUserData: (data: DataType) => ({type: "SET_USER_DATA", data} as const),
+}
+
+export const thunks = {
+    authTC: (): AppThunk => dispatch => {
+        authAPI.authMe()
+            .then(data => data.resultCode === 0 && dispatch(actions.setAuthUserData(data.data)))
+    }
 }

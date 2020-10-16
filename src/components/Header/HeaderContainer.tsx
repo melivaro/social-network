@@ -2,8 +2,7 @@ import React from "react";
 import {Header} from "./Header";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {actions, DataType, InitialStateType} from "../../redux/auth-reducer";
-import {authAPI} from "../../api/api";
+import {InitialStateType, thunks} from "../../redux/auth-reducer";
 
 
 export type MapStatePropsType = {
@@ -11,7 +10,7 @@ export type MapStatePropsType = {
 }
 
 type MapDispatchPropsType = {
-    setAuthUserData: (data: DataType) => void
+    authTC: () => void
 }
 
 type PropsType = MapStatePropsType & MapDispatchPropsType
@@ -19,8 +18,7 @@ type PropsType = MapStatePropsType & MapDispatchPropsType
 export class HeaderContainerApi extends React.Component<PropsType> {
 
     componentDidMount() {
-        authAPI.authMe()
-            .then(data => data.resultCode === 0 && this.props.setAuthUserData(data.data))
+        this.props.authTC()
     }
 
     render() {
@@ -34,6 +32,6 @@ const MapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 }
 
-const {setAuthUserData} = actions
+const {authTC} = thunks
 
-export const HeaderContainer = connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(MapStateToProps, {setAuthUserData})(HeaderContainerApi)
+export const HeaderContainer = connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(MapStateToProps, {authTC})(HeaderContainerApi)
