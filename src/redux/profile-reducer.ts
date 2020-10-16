@@ -47,6 +47,7 @@ export const profileReducer: Reducer<InitialStateType, ActionTypes> = (state = i
 
 export type ActionTypes = InferActionTypes<typeof actions>
 
+
 export const actions = {
     addPostActionCreator: () => ({type: "ADD_POST"}) as const,
     updateNewPostTextActionCreator: (text: string) => ({type: "UPDATE_NEW_POST_TEXT", newText: text}) as const,

@@ -26,7 +26,7 @@ export type ActionTypes = InferActionTypes<typeof actions>
 export const authReducer: Reducer<InitialStateType, ActionTypes> = (state = initialState, action): InitialStateType => {
 
     switch (action.type) {
-        case "SET_USER_DATA":{
+        case "SET_USER_DATA": {
             return {...state, ...action.data, isAuth: state.isAuth = true}
         }
         default:
