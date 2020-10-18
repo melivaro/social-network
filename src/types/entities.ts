@@ -1,6 +1,8 @@
 
 export type InferActionTypes<T> = T extends {[key: string]:(...args: any[])=>infer U}? U : never
 
+
+
 export type ProfileType = {
     "aboutMe": string
     "contacts": {

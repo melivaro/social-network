@@ -4,6 +4,8 @@ import {InitialStateType, thunks} from "../../redux/user-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Users} from "./Users";
 import {Loader} from "../common/Loader/Loader";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 export type MapStatePropsType = {
     UserPage: InitialStateType
@@ -18,7 +20,7 @@ export type MapDispatchPropsType = {
 
 type PropsType = MapStatePropsType & MapDispatchPropsType
 
-export class UsersAPIComponent extends React.Component<PropsType> {
+export class UsersComponent extends React.Component<PropsType> {
     constructor(props: any) {
         super(props);
     }
@@ -42,26 +44,31 @@ export class UsersAPIComponent extends React.Component<PropsType> {
 
 
     render() {
-        return <>
-            {this.props.UserPage.isFetching ? <Loader/> : <Users
-                follow={this.setFollow}
-                unfollow={this.setUnfollow}
-                UserPage={this.props.UserPage}
-                setCurrentPage={this.setCurrentPage}
-            />
-            }
-        </>
+        if (this.props.UserPage.isFetching) return <Loader/>
+        return <Users
+            follow={this.setFollow}
+            unfollow={this.setUnfollow}
+            UserPage={this.props.UserPage}
+            setCurrentPage={this.setCurrentPage}
+        />
+
     }
 }
 
+
 const {getUsersTC, getCurrentPageTC, followTC, unfollowTC} = thunks
 
-let mapStateToProps = (state: AppStateType): MapStatePropsType => ({UserPage: state.UserPage})
+let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
+    UserPage: state.UserPage
+})
 
-export const UserContainer = connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {
-    getUsersTC,
-    getCurrentPageTC,
-    followTC,
-    unfollowTC,
-})(UsersAPIComponent);
+export default compose<React.ComponentType>(
+    connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {
+        getUsersTC,
+        getCurrentPageTC,
+        followTC,
+        unfollowTC,
+    }),
+    withAuthRedirect,
+    )(UsersComponent);
 

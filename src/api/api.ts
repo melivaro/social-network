@@ -9,13 +9,13 @@ const instance = axios.create({
     }
 })
 
-type UsersDataType = {
+export type UsersDataType = {
     error: null | string
     items: Array<UserType>
     totalCount: number
 }
 
-type FollowType = {
+export type FollowType = {
     data: {}
     fieldsErrors: []
     messages: []
@@ -57,6 +57,12 @@ type AuthType = {
 
 }
 
+export type SuccessfulType = {
+    resultCode: number
+    messages: string[],
+    data: {}
+}
+
 export const authAPI = {
     authMe: () => {
         return instance.get<AuthType>("auth/me")
@@ -68,5 +74,13 @@ export const profileAPI = {
     getProfile: (userId: number) => {
         return instance.get<ProfileType>(`profile/${userId}`)
             .then(response => response.data)
+    },
+    getStatus: (userId: number) => {
+        return instance.get<string>(`profile/status/${userId}`)
+            .then(response => response.data)
+    },
+    putStatus: (status: string) => {
+        return instance.put<SuccessfulType>(`profile/status`, {status})
+            .then(response => response.data.resultCode)
     }
 }

@@ -13,10 +13,6 @@ export function ProfileInfo(props: PropsType) {
     }
     return (
         <div className={s.profileInfo}>
-            <div className={s.cover}>
-                <img src="https://demo.presscustomizr.com/wp-content/uploads/2016/12/ny_city-1348x500.jpg" width="940"
-                     alt=""/>
-            </div>
             <div className={s.description}>
                 <img src={props.profile.photos.large} alt="фотография пользователя"/>
                 <p><span>Имя: </span>{props.profile.fullName}</p>

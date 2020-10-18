@@ -4,7 +4,7 @@ import {DialogItem} from "./DialogItem/DialogItem";
 import {MessageItem} from "./MessageItem/MessageItem";
 import {InitialStateType} from "../../redux/dialogs-reducer";
 
-type PropsType = MapStatePropsType & MapDispatchPropsType
+export type PropsType = MapStatePropsType & MapDispatchPropsType
 
 export type MapDispatchPropsType = {
     changeMessageText: (text: string) => void

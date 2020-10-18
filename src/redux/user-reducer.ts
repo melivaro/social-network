@@ -67,7 +67,7 @@ const {setCurrentPage, setTotalCount, followSuccess, setUsers, unfollowSuccess, 
 const {getUsers, getCurrentPage, postFollow, deleteUnfollow} = usersAPI
 
 export const thunks = {
-    getUsersTC: (pageSize: number, currentPage: number): AppThunk => (dispatch: any) => {
+    getUsersTC: (pageSize: number, currentPage: number): AppThunk => dispatch => {
         dispatch(setLoader(true))
         getUsers(pageSize, currentPage)
             .then(data => {
@@ -76,7 +76,7 @@ export const thunks = {
                 dispatch(setTotalCount(data.totalCount))
             })
     },
-    getCurrentPageTC: (pageSize: number, pageNumber: number): AppThunk => (dispatch: any) => {
+    getCurrentPageTC: (pageSize: number, pageNumber: number): AppThunk => dispatch => {
         dispatch(setLoader(true))
         dispatch(setCurrentPage(pageNumber))
         getCurrentPage(pageSize, pageNumber)
