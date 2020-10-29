@@ -17,7 +17,6 @@ const initialState = {
         {id: 2, message: "It's my first post", likesCounter: 13},
         {id: 3, message: "Yo!", likesCounter: 17},
     ] as Array<PostType>,
-    newPostText: "",
     profile: {} as ProfileType,
     status: ""
 }
@@ -29,15 +28,9 @@ export const profileReducer: Reducer<InitialStateType, ActionTypes> = (state = i
                 ...state,
                 posts: [...state.posts, {
                     id: 5,
-                    message: state.newPostText,
+                    message: action.newPost,
                     likesCounter: 0
                 }],
-                newPostText: ''
-            }
-        case "UPDATE_NEW_POST_TEXT":
-            return {
-                ...state,
-                newPostText: action.newText
             }
         case "SET_USER_PROFILE":
             return {
@@ -56,9 +49,8 @@ export type ActionTypes = InferActionTypes<typeof actions>
 
 
 export const actions = {
-    addPostActionCreator: () => ({type: "ADD_POST"}) as const,
-    updateNewPostTextActionCreator: (text: string) => ({type: "UPDATE_NEW_POST_TEXT", newText: text}as const),
-    setUserProfile: (profile: ProfileType) => ({type: "SET_USER_PROFILE", profile}as const),
+    addPostActionCreator: (newPost: string) => ({type: "ADD_POST", newPost} as const),
+    setUserProfile: (profile: ProfileType) => ({type: "SET_USER_PROFILE", profile} as const),
     setStatus: (status: string) => ({type: "SET_STATUS", status} as const),
 }
 

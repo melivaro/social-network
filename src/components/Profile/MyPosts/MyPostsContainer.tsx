@@ -9,8 +9,7 @@ export type MapStatePropsType = {
 }
 
 export type MapDispatchPropsType = {
-    addPost: () => void
-    updateNewPostText: (text: string) => void
+    addPost: (newPost: string) => void
 }
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
@@ -19,4 +18,4 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 }
 
-export const MyPostsContainer = connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {addPost: actions.addPostActionCreator, updateNewPostText: actions.updateNewPostTextActionCreator})(MyPosts);
+export const MyPostsContainer = connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {addPost: actions.addPostActionCreator})(MyPosts);

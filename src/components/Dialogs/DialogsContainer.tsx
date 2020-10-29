@@ -14,6 +14,6 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType  => {
 }
 
 export default compose<React.ComponentType>(
-        connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {changeMessageText: actions.updateNewMessageTextActionCreator, sendMessage: actions.sendMessageActionCreator}),
+        connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {sendMessage: actions.sendMessageActionCreator}),
         withAuthRedirect
     )(Dialogs)

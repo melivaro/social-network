@@ -1,5 +1,5 @@
 import {Reducer} from "redux";
-import {InferActionTypes, DialogType, MessageType} from "../types/entities";
+import {DialogType, InferActionTypes, MessageType} from "../types/entities";
 
 export type InitialStateType = typeof initialState
 
@@ -16,7 +16,6 @@ const initialState = {
         {id: 3, message: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, similique?"},
         {id: 4, message: "Lorem ipsum dolor sit amet."},
     ] as Array<MessageType>,
-    newMessageText: ""
 }
 
 export const dialogsReducer: Reducer<InitialStateType, ActionTypes> = (state = initialState, action): InitialStateType => {
@@ -26,14 +25,8 @@ export const dialogsReducer: Reducer<InitialStateType, ActionTypes> = (state = i
                 ...state,
                 messages: [...state.messages, {
                     id: 6,
-                    message: state.newMessageText,
+                    message: action.message,
                 }],
-                newMessageText: "",
-            }
-        case "UPDATE_NEW_MESSAGE_TEXT":
-            return {
-                ...state,
-                newMessageText: action.newMessageText,
             }
         default:
             return state
@@ -43,6 +36,5 @@ export const dialogsReducer: Reducer<InitialStateType, ActionTypes> = (state = i
 export type ActionTypes = InferActionTypes<typeof actions>
 
 export const actions = {
-    sendMessageActionCreator: ()=>({type: "SEND_MESSAGE"}) as const,
-    updateNewMessageTextActionCreator: (text: string)=>({type: "UPDATE_NEW_MESSAGE_TEXT", newMessageText: text}) as const,
+    sendMessageActionCreator: (message: string)=>({type: "SEND_MESSAGE", message}) as const,
 }
