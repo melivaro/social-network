@@ -3,6 +3,8 @@ import {Post} from "./Post/Post";
 import s from "./MyPosts.module.css";
 import {MapDispatchPropsType, MapStatePropsType} from "./MyPostsContainer";
 import {Field, InjectedFormProps, reduxForm} from 'redux-form'
+import {CustomField} from "../../common/FormsControls/FormsControls";
+import {required, maxLengthCreator} from "../../../utils/validators/validators";
 
 type PropsType = MapDispatchPropsType & MapStatePropsType
 
@@ -28,14 +30,18 @@ export const MyPosts: React.FC<PropsType> = ({ProfilePage, addPost}) => {
 type FormDataType = {
     newPost: string
 }
+const onHandlerMaxLength = maxLengthCreator(7);
 
 const AddNewPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
+
     return <form onSubmit={props.handleSubmit} className={s.createPublication}>
         <Field
-            component={"textarea"}
+            component={CustomField}
             name={"newPost"}
             placeholder={"Что у вас нового?"}
+            validate={[required, onHandlerMaxLength]}
+            fieldType={"textarea"}
         />
         <button>Add post</button>
     </form>

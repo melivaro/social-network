@@ -9,20 +9,17 @@ export type MapStatePropsType = {
     auth: InitialStateType
 }
 
-type MapDispatchPropsType = {
+export type MapDispatchPropsType = {
     authTC: () => void
+    logout: () => void
 }
 
 type PropsType = MapStatePropsType & MapDispatchPropsType
 
 export class HeaderContainerApi extends React.Component<PropsType> {
 
-    componentDidMount() {
-        this.props.authTC()
-    }
-
     render() {
-        return <Header auth={this.props.auth}/>
+        return <Header logout={this.props.logout} authTC={this.props.authTC} auth={this.props.auth}/>
     }
 }
 
@@ -32,6 +29,9 @@ const MapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 }
 
-const {authTC} = thunks
+const {authTC, logout} = thunks
 
-export const HeaderContainer = connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(MapStateToProps, {authTC})(HeaderContainerApi)
+export const HeaderContainer = connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(MapStateToProps, {
+    authTC,
+    logout
+})(HeaderContainerApi)

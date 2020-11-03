@@ -4,6 +4,8 @@ import {DialogItem} from "./DialogItem/DialogItem";
 import {MessageItem} from "./MessageItem/MessageItem";
 import {InitialStateType} from "../../redux/dialogs-reducer";
 import {Field, InjectedFormProps, reduxForm} from 'redux-form'
+import {CustomField} from "../common/FormsControls/FormsControls";
+import {maxLengthCreator, required} from "../../utils/validators/validators";
 
 export type PropsType = MapStatePropsType & MapDispatchPropsType
 
@@ -39,6 +41,7 @@ export function Dialogs({DialogPage, sendMessage}: PropsType) {
 export type FormDataType = {
     message: string
 }
+    const maxLengthValidate = maxLengthCreator(30);
 
 const AddMessageForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
@@ -46,8 +49,10 @@ const AddMessageForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
         <div>
             <Field
                 name={'message'}
-                component={'textarea'}
+                component={CustomField}
                 placeholder="Enter your message"
+                fieldType={'textarea'}
+                validate={[required, maxLengthValidate]}
             />
         </div>
         <div>

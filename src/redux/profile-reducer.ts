@@ -1,6 +1,6 @@
 import {Reducer} from "redux";
 import {InferActionTypes, ProfileType} from "../types/entities";
-import {profileAPI} from "../api/api";
+import {authAPI, profileAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
 
 export type InitialStateType = typeof initialState
@@ -55,23 +55,24 @@ export const actions = {
 }
 
 export const thunks = {
-    profileTC: (matchParamsUserId: number): AppThunk => dispatch => {
+    profileTC: (matchParamsUserId: number, authorizedUserId: number | null, historyProps: any): AppThunk => dispatch => {
         let userId = matchParamsUserId
-        !userId && (userId = 11378)
+        authorizedUserId && !userId && (userId = authorizedUserId)
+        !userId && historyProps.push("/login")
         profileAPI.getProfile(userId)
             .then(data => {
                 dispatch(actions.setUserProfile(data))
             })
     },
-    statusTC: (userId: number): AppThunk => dispatch => {
-        !userId && (userId = 11378)
+    statusTC: (userId: number, authorizedUserId: number | null): AppThunk => dispatch => {
+        authorizedUserId && !userId && (userId = authorizedUserId)
         profileAPI.getStatus(userId).then(status => {
             dispatch(actions.setStatus(status))
         })
     },
     updateStatus: (status: string): AppThunk => dispatch => {
         profileAPI.putStatus(status).then(resultCode => {
-            if(resultCode === 0){
+            if (resultCode === 0) {
                 dispatch(actions.setStatus(status))
             }
         })

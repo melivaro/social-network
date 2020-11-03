@@ -3,6 +3,7 @@ import {dialogsReducer} from "./dialogs-reducer";
 import {profileReducer} from "./profile-reducer";
 import {userReducer} from "./user-reducer";
 import {authReducer} from "./auth-reducer";
+import {appReducer} from "./app-reducer";
 import {composeWithDevTools} from "redux-devtools-extension";
 import thunkMiddleware, {ThunkAction} from "redux-thunk"
 import { reducer as formReducer } from 'redux-form'
@@ -12,7 +13,8 @@ let rootReducer = combineReducers({
     DialogPage: dialogsReducer,
     UserPage: userReducer,
     auth: authReducer,
-    form: formReducer
+    app: appReducer,
+    form: formReducer,
 })
 export type AppStateType = ReturnType<typeof rootReducer>
 

@@ -43,16 +43,16 @@ export const usersAPI = {
     },
 }
 
-type AuthMeType = {
-    email: string
+export type AuthMeType = {
     id: number
+    email: string
     login: string
 }
 
-type AuthType = {
-    data: AuthMeType
+export type AuthType<T = {}> = {
+    data: T
     fieldsErrors: []
-    messages: []
+    messages: string[]
     resultCode: number
 
 }
@@ -65,8 +65,16 @@ export type SuccessfulType = {
 
 export const authAPI = {
     authMe: () => {
-        return instance.get<AuthType>("auth/me")
+        return instance.get<AuthType<AuthMeType>>("auth/me")
             .then(response => response.data)
+    },
+    login: (email: string, password: string, rememberMe: boolean = false) => {
+        return instance.post<AuthType<{ userId: number }>>("auth/login", {email, password, rememberMe})
+            .then(res => res.data)
+    },
+    logout: () => {
+        return instance.delete<AuthType>("auth/login")
+            .then(res => res.data)
     }
 }
 

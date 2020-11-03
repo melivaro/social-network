@@ -5,7 +5,6 @@ import {AppStateType} from "../../redux/redux-store";
 import {thunks} from "../../redux/profile-reducer";
 import {ProfileType} from "../../types/entities";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
 type PathParamsType = {
@@ -16,13 +15,13 @@ type PropsType = MapStatePropsType & MapDispatchPropsType & RouteComponentProps<
 
 export class ProfileComponent extends React.Component<PropsType> {
 
-    constructor(props: any) {
+    constructor(props: PropsType) {
         super(props);
     }
 
     componentDidMount() {
-        this.props.profileTC(Number(this.props.match.params.userId))
-        this.props.statusTC(Number(this.props.match.params.userId))
+        this.props.profileTC(Number(this.props.match.params.userId), this.props.authorizedUserId, this.props.history)
+        this.props.statusTC(Number(this.props.match.params.userId), this.props.authorizedUserId)
     }
 
     render() {
@@ -35,21 +34,21 @@ export class ProfileComponent extends React.Component<PropsType> {
 export type MapStatePropsType = {
     profile: ProfileType
     status: string
+    authorizedUserId: number | null
 }
 
 export type MapDispatchPropsType = {
-    profileTC: (userId: number) => void
-    statusTC: (userId: number) => void
+    profileTC: (userId: number, authorizedUserId: number | null, historyPorops: any) => void
+    statusTC: (userId: number, authorizedUserId: number | null) => void
     updateStatus: (status: string) => void
 }
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => ({profile: state.ProfilePage.profile, status: state.ProfilePage.status})
+const mapStateToProps = (state: AppStateType): MapStatePropsType => ({profile: state.ProfilePage.profile, status: state.ProfilePage.status, authorizedUserId: state.auth.id})
 
 const {profileTC, statusTC, updateStatus} = thunks
 
 export default compose<React.ComponentType>(
     connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {profileTC, statusTC, updateStatus}),
     withRouter,
-    withAuthRedirect
 )(ProfileComponent)
 

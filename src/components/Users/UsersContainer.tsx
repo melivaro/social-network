@@ -4,7 +4,6 @@ import {InitialStateType, thunks} from "../../redux/user-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Users} from "./Users";
 import {Loader} from "../common/Loader/Loader";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
 export type MapStatePropsType = {
@@ -68,7 +67,6 @@ export default compose<React.ComponentType>(
         getCurrentPageTC,
         followTC,
         unfollowTC,
-    }),
-    withAuthRedirect,
+    })
     )(UsersComponent);
 
