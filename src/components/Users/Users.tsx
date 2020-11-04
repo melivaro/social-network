@@ -1,11 +1,14 @@
 import React from "react";
 import {UserItem} from "./UserItem";
 import s from "./Users.module.css"
-import {InitialStateType} from "../../redux/user-reducer";
 import {UserType} from "../../types/entities";
 
 type PropsType = {
-    UserPage: InitialStateType
+    followingInProgress: Array<number>
+    pageSize: number
+    currentPage: number
+    totalCount: number
+    users: Array<UserType>
     setCurrentPage: (p: number) => void
     follow: (userId: number) => void
     unfollow: (userId: number) => void
@@ -13,19 +16,16 @@ type PropsType = {
 
 export const Users: React.FC<PropsType> = (
     {
-        UserPage,
         unfollow,
         follow,
         setCurrentPage, // отправить текущую страницу пагинации
-    }
-) => {
-    const {
         pageSize, // кол-во отображаемых пользовательей на одной странице
         currentPage, // выбранная страница
         users, // массив пользователей
         totalCount, // общее кол-во зарегестрированных пользовательей
         followingInProgress,
-    } = UserPage
+    }
+) => {
 
     const page: number = Math.ceil(totalCount / pageSize)
     const pages: Array<number> = []
@@ -36,7 +36,7 @@ export const Users: React.FC<PropsType> = (
     return (
         <div>
             {pages.map((p) => <span key={p.toString()} onClick={() => setCurrentPage(p)}
-                                  className={p === currentPage ? s.paginationSelected : ""}>{p}</span>)}
+                                  className={p === currentPage ? s.paginationSelected : s.pagination}>{p}</span>)}
             {users.map((u: UserType) => <UserItem key={u.id} followingInProgress={followingInProgress} user={u} unfollow={unfollow} follow={follow}/>)}</div>
     )
 }

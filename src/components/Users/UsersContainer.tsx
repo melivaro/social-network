@@ -1,14 +1,20 @@
 import React from "react";
 import {connect} from "react-redux";
-import {InitialStateType, thunks} from "../../redux/user-reducer";
+import {thunks} from "../../redux/user-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Users} from "./Users";
 import {Loader} from "../common/Loader/Loader";
 import {compose} from "redux";
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalCount,
+    getUsers
+} from "../../redux/users-selectors";
 
-export type MapStatePropsType = {
-    UserPage: InitialStateType
-}
+export type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
 export type MapDispatchPropsType = {
     getUsersTC: (pageSize: number, currentPage: number) => void
@@ -25,12 +31,12 @@ export class UsersComponent extends React.Component<PropsType> {
     }
 
     componentDidMount() {
-        this.props.getUsersTC(this.props.UserPage.pageSize, this.props.UserPage.currentPage)
+        this.props.getUsersTC(this.props.pageSize, this.props.currentPage)
 
     }
 
     setCurrentPage = (pageNumber: number) => {
-        this.props.getCurrentPageTC(this.props.UserPage.pageSize, pageNumber)
+        this.props.getCurrentPageTC(this.props.pageSize, pageNumber)
     }
 
     setFollow = (userId: number) => {
@@ -43,12 +49,16 @@ export class UsersComponent extends React.Component<PropsType> {
 
 
     render() {
-        if (this.props.UserPage.isFetching) return <Loader/>
+        if (this.props.isFetching) return <Loader/>
         return <Users
             follow={this.setFollow}
             unfollow={this.setUnfollow}
-            UserPage={this.props.UserPage}
             setCurrentPage={this.setCurrentPage}
+            pageSize={this.props.pageSize}
+            currentPage={this.props.currentPage}
+            users={this.props.users}
+            totalCount={this.props.totalCount}
+            followingInProgress={this.props.followingInProgress}
         />
 
     }
@@ -57,8 +67,13 @@ export class UsersComponent extends React.Component<PropsType> {
 
 const {getUsersTC, getCurrentPageTC, followTC, unfollowTC} = thunks
 
-let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
-    UserPage: state.UserPage
+let mapStateToProps = (state: AppStateType) => ({
+    isFetching: getIsFetching(state),
+    pageSize: getPageSize(state),
+    currentPage: getCurrentPage(state),
+    users: getUsers(state),
+    totalCount: getTotalCount(state),
+    followingInProgress: getFollowingInProgress(state)
 })
 
 export default compose<React.ComponentType>(
