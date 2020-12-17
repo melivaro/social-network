@@ -2,7 +2,7 @@ import React from "react";
 import s from "./Post.module.css";
 import { PostType } from "../../../../types/entities";
 
-export function Post(props: PostType) {
+export const Post = React.memo( (props: PostType) => {
 
     return (
         <li className={s.item}>
@@ -14,4 +14,4 @@ export function Post(props: PostType) {
             </div>
         </li>
     )
-}
+} )

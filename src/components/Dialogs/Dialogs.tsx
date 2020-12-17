@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useMemo} from "react";
 import s from "./Dialogs.module.css"
 import {DialogItem} from "./DialogItem/DialogItem";
 import {MessageItem} from "./MessageItem/MessageItem";
@@ -17,10 +17,14 @@ export type MapStatePropsType = {
     DialogPage: InitialStateType
 }
 
-export function Dialogs({DialogPage, sendMessage}: PropsType) {
+export const Dialogs = ({DialogPage, sendMessage}: PropsType) => {
 
-    let dialogItems = DialogPage.dialogs.map((d) => <DialogItem key={d.id} id={d.id} name={d.name}/>)
-    let messageItems = DialogPage.messages.map((m) => <MessageItem key={m.id} message={m.message} id={m.id}/>)
+    let dialogItems = DialogPage.dialogs.map((d) => {
+        return <DialogItem key={d.id} id={d.id} name={d.name}/>
+    })
+    let messageItems = DialogPage.messages.map((m) => {
+        return  <MessageItem key={m.id} message={m.message} id={m.id}/>
+    })
 
     const addNewMessage = (formData: FormDataType) => {
         sendMessage(formData.message)

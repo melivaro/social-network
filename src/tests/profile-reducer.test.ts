@@ -9,30 +9,62 @@ beforeEach(() => {
             {id: 2, message: "It's my first post", likesCounter: 13},
             {id: 3, message: "Yo!", likesCounter: 17},
         ] as Array<PostType>,
-        newPostText: "",
         profile: {} as ProfileType,
+        statusObj: {status: 'my status'},
+        isSuccessStatus: false,
     }
 })
 
-test("newPostText should be correct string change", () => {
+test("status should be corrected", () => {
 
-    const action = actions.updateNewPostTextActionCreator("beer")
+    const action = actions.setStatus({status: 'new status'})
 
     const finalState = profileReducer(startState, action)
 
-    expect(finalState.newPostText.length).toBe(4)
-    expect(finalState.newPostText).toBe("beer")
+    expect(finalState.statusObj.status).toBe('new status')
 })
 
-test("posts should be new length array", ()=>{
+test("posts should be new length array", ()=> {
 
-    const preStartState = profileReducer(startState, actions.updateNewPostTextActionCreator("hugo"))
+    const userProfile = {
+        "aboutMe": 'some text',
+        "contacts": {
+            "facebook": 'fb.com',
+            "website": 'cite.ru',
+            "vk": 'vk.com',
+            "twitter": 'tw.com',
+            "instagram": 'ig.com',
+            "youtube": 'yt.ru',
+            "github": 'ghpg.com',
+            "mainLink": 'linkEdin',
+        },
+        "lookingForAJob": 'yeas',
+        "lookingForAJobDescription": 'React',
+        "fullName": 'Feofan',
+        "userId": 777,
+        "photos": {
+            "small": '',
+            "large": '',
+        }
+    }
 
-    const action = actions.addPostActionCreator()
 
-    const finalState = profileReducer(preStartState, action)
+    const action = actions.setUserProfile(userProfile)
+//@ts-ignore
+    const finalState = profileReducer(startState, action)
+
+    expect(finalState.profile.lookingForAJobDescription).toBe('React')
+    expect(finalState.profile.fullName).toBe('Feofan')
+})
+
+test('post should be created', () => {
+
+    const action = actions.addPostActionCreator('test post')
+
+    const finalState = profileReducer(startState, action)
 
     expect(finalState.posts.length).toBe(4)
-    expect(finalState.posts[3].message).toBe("hugo")
-
+    expect(finalState.posts[0].id).toBe(1)
+    expect(finalState.posts[3].id).toBe(5)
+    expect(finalState.posts[3].message).toBe('test post')
 })

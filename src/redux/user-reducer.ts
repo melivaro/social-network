@@ -42,7 +42,7 @@ export const userReducer: Reducer<InitialStateType, ActionTypes> = (state = init
         case "SET_LOADER":
             return {...state, isFetching: action.isFetching}
         case "SET_DISABLED":
-            return {...state, followingInProgress: action.isFetching? [...state.followingInProgress, action.userId] : state.followingInProgress.filter(id=> id != action.userId)}
+            return {...state, followingInProgress: action.isFetching? [...state.followingInProgress, action.userId] : state.followingInProgress.filter(id=> id !== action.userId)}
         default:
             return state
     }

@@ -10,9 +10,9 @@ type PropsType = {
     followingInProgress: Array<number>
 }
 
-export const UserItem: React.FC<PropsType> = ({user, follow, unfollow, followingInProgress}) => {
+export const UserItem: React.FC<PropsType> = React.memo(({user, follow, unfollow, followingInProgress}) => {
     const {id, followed, name, uniqueUrlName, status, large, small} = {...user, ...user.photos}
-
+console.log('user item')
     let onFollowButton = () => follow(id)
     let onUnfollowButton = () => unfollow(id)
 
@@ -26,4 +26,4 @@ export const UserItem: React.FC<PropsType> = ({user, follow, unfollow, following
                 <button disabled={followingInProgress.some(uId=> uId === id)} onClick={onFollowButton}>follow</button>}
         </div>
     )
-}
+})

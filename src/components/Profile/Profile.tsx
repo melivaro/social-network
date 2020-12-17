@@ -7,15 +7,15 @@ import {ProfileStatusWithHooks} from "./ProfileStatus/ProfileStatusWithHooks";
 
 type PropsType = {
     profile: ProfileType
-    status: string
+    statusObj: {status: string}
     updateStatus: (status: string) => void
-    // children: React.ReactNode
 }
 
-export function Profile(props: PropsType) {
+export const Profile = (props: PropsType) => {
+
     return (
         <div className={s.content}>
-            <ProfileStatusWithHooks  status={props.status} updateStatus={props.updateStatus}/>
+            <ProfileStatusWithHooks statusObj={props.statusObj} updateStatus={props.updateStatus}/>
             <ProfileInfo profile={props.profile}/>
             <MyPostsContainer/>
         </div>

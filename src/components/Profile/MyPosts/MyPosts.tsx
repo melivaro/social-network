@@ -8,14 +8,15 @@ import {required, maxLengthCreator} from "../../../utils/validators/validators";
 
 type PropsType = MapDispatchPropsType & MapStatePropsType
 
-export const MyPosts: React.FC<PropsType> = ({ProfilePage, addPost}) => {
+export const MyPosts = (props: PropsType) => {
 
-    let postItems = ProfilePage.posts.map(p => <Post key={p.id} id={p.id} message={p.message}
-                                                     likesCounter={p.likesCounter}/>)
+    let postItems = props.posts.map((p, index) => <Post key={`${p.id}+${index}`} id={p.id} message={p.message}
+                                                        likesCounter={p.likesCounter}/>)
 
     const onAddPost = (formData: FormDataType) => {
-        addPost(formData.newPost)
+        props.addPost(formData.newPost)
     };
+
     return (
         <div className={s.myPosts}>
             <h3>My posts</h3>
@@ -25,6 +26,8 @@ export const MyPosts: React.FC<PropsType> = ({ProfilePage, addPost}) => {
             </ul>
         </div>
     )
+
+
 }
 
 type FormDataType = {
@@ -32,21 +35,13 @@ type FormDataType = {
 }
 const onHandlerMaxLength = maxLengthCreator(7);
 
-const AddNewPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
-
-
+const AddNewPostForm: React.FC<InjectedFormProps<FormDataType>> = React.memo((props) => {
     return <form onSubmit={props.handleSubmit} className={s.createPublication}>
-        <Field
-            component={CustomField}
-            name={"newPost"}
-            placeholder={"Что у вас нового?"}
-            validate={[required, onHandlerMaxLength]}
-            fieldType={"textarea"}
-        />
+        <Field component={CustomField} name={"newPost"} placeholder={"Что у вас нового?"} validate={[required, onHandlerMaxLength]} fieldType={"textarea"}/>
         <button>Add post</button>
     </form>
-}
-
+    }
+)
 const MyPostReduxForm = reduxForm<FormDataType>({
     form: 'myPosts'
 })(AddNewPostForm)

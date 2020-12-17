@@ -6,6 +6,7 @@ import {thunks} from "../../redux/profile-reducer";
 import {ProfileType} from "../../types/entities";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
+import {Loader} from "../common/Loader/Loader";
 
 type PathParamsType = {
     userId: string
@@ -25,15 +26,20 @@ export class ProfileComponent extends React.Component<PropsType> {
     }
 
     render() {
-
-        return <Profile profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus}/>
+        if (this.props.isSuccessStatus && Object.keys(this.props.profile).length !== 0) {
+            return <Profile profile={this.props.profile} statusObj={this.props.statusObj}
+                            updateStatus={this.props.updateStatus}/>
+        } else {
+            return <Loader/>
+        }
     }
 }
 
 
 export type MapStatePropsType = {
     profile: ProfileType
-    status: string
+    statusObj: {status: string}
+    isSuccessStatus: boolean
     authorizedUserId: number | null
 }
 
@@ -43,7 +49,14 @@ export type MapDispatchPropsType = {
     updateStatus: (status: string) => void
 }
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => ({profile: state.ProfilePage.profile, status: state.ProfilePage.status, authorizedUserId: state.auth.id})
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+    return {
+        profile: state.ProfilePage.profile,
+        statusObj: state.ProfilePage.statusObj,
+        isSuccessStatus: state.ProfilePage.isSuccessStatus,
+        authorizedUserId: state.auth.id
+}
+}
 
 const {profileTC, statusTC, updateStatus} = thunks
 

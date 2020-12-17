@@ -49,6 +49,7 @@ export class UsersComponent extends React.Component<PropsType> {
 
 
     render() {
+        console.log('user container')
         if (this.props.isFetching) return <Loader/>
         return <Users
             follow={this.setFollow}

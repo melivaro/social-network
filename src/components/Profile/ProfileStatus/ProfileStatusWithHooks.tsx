@@ -1,37 +1,46 @@
 import React, {ChangeEvent, FC, useEffect, useState} from 'react';
+import {Loader} from "../../common/Loader/Loader";
 
 type PropsType = {
-    status: string
+    statusObj: {status: string}
     updateStatus: (status: string) => void
 }
 
-export const ProfileStatusWithHooks: FC<PropsType> = (
+export const ProfileStatusWithHooks: FC<PropsType> = React.memo( (
     {
-        status,
+        statusObj,
         updateStatus
     }
 ) => {
     const [editMode, setEditMode] = useState(false)
-    const [localStatus, setLocalStatus] = useState(status)
-
+    const [localStatus, setLocalStatus] = useState(statusObj.status)
+    const [loader, setLoader] = useState(false)
     useEffect(() => {
-        setLocalStatus(status)
-    },[status])
+        // setLocalStatus(status)
+        setLoader(false)
+    },[statusObj])
+
 
     const activateEditMode = () => setEditMode(true);
     const deactivateEditMode = () => {
+        setLoader(true)
         setEditMode(false)
         updateStatus(localStatus)
     }
 
     const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => setLocalStatus(e.currentTarget.value)
 
+    if(loader){
+        console.log('Status Loader')
+        return <Loader/>
+    }
+
     return (
         <div>
 
             {!editMode &&
             <div>
-                <span onDoubleClick={activateEditMode}>{status || "no status"}</span>
+                <span onDoubleClick={activateEditMode}>{statusObj.status || "no status"}</span>
             </div>}
             {editMode &&
             <div>
@@ -41,4 +50,4 @@ export const ProfileStatusWithHooks: FC<PropsType> = (
 
         </div>
     );
-};
+} )

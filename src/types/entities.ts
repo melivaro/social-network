@@ -1,6 +1,8 @@
 
-export type InferActionTypes<T> = T extends {[key: string]:(...args: any[])=>infer U}? U : never
+// export type InferActionTypes<T> = T extends {[key: string]:(...args: any[])=>infer U}? U : never
 
+type PropertiesType<T> = T extends { [key: string]: infer U } ? U : never
+export type InferActionTypes<T extends { [key: string]: (...arg: any[]) => any }> = ReturnType<PropertiesType<T>>
 
 
 export type ProfileType = {

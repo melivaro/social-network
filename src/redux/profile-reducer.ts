@@ -1,6 +1,6 @@
 import {Reducer} from "redux";
 import {InferActionTypes, ProfileType} from "../types/entities";
-import {authAPI, profileAPI} from "../api/api";
+import {profileAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
 
 export type InitialStateType = typeof initialState
@@ -18,7 +18,8 @@ const initialState = {
         {id: 3, message: "Yo!", likesCounter: 17},
     ] as Array<PostType>,
     profile: {} as ProfileType,
-    status: ""
+    statusObj: {status: ''},
+    isSuccessStatus: false,
 }
 
 export const profileReducer: Reducer<InitialStateType, ActionTypes> = (state = initialState, action): InitialStateType => {
@@ -38,7 +39,7 @@ export const profileReducer: Reducer<InitialStateType, ActionTypes> = (state = i
             }
         case "SET_STATUS":
             return {
-                ...state, status: action.status
+                ...state, statusObj: action.statusObj, isSuccessStatus: action.isSuccessStatus
             }
         default:
             return state
@@ -51,7 +52,7 @@ export type ActionTypes = InferActionTypes<typeof actions>
 export const actions = {
     addPostActionCreator: (newPost: string) => ({type: "ADD_POST", newPost} as const),
     setUserProfile: (profile: ProfileType) => ({type: "SET_USER_PROFILE", profile} as const),
-    setStatus: (status: string) => ({type: "SET_STATUS", status} as const),
+    setStatus: (statusObj: {status: string}) => ({type: "SET_STATUS", statusObj, isSuccessStatus: true} as const),
 }
 
 export const thunks = {
@@ -67,13 +68,13 @@ export const thunks = {
     statusTC: (userId: number, authorizedUserId: number | null): AppThunk => dispatch => {
         authorizedUserId && !userId && (userId = authorizedUserId)
         profileAPI.getStatus(userId).then(status => {
-            dispatch(actions.setStatus(status))
+            dispatch(actions.setStatus({status}))
         })
     },
     updateStatus: (status: string): AppThunk => dispatch => {
         profileAPI.putStatus(status).then(resultCode => {
             if (resultCode === 0) {
-                dispatch(actions.setStatus(status))
+                dispatch(actions.setStatus({status}))
             }
         })
     }

@@ -5,6 +5,7 @@ export const Loader = () => {
     return (
         <div className={s.ldsCircle}>
             <div></div>
+            <p>loading...</p>
         </div>
     )
 }

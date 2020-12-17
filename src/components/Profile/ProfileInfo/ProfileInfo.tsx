@@ -7,7 +7,7 @@ type PropsType = {
     profile: ProfileType
 }
 
-export function ProfileInfo(props: PropsType) {
+export const ProfileInfo = React.memo((props: PropsType) => {
     if (Object.keys(props.profile).length === 0) {
         return <Loader/>
     }
@@ -30,4 +30,4 @@ export function ProfileInfo(props: PropsType) {
             </div>
         </div>
     )
-}
+})
