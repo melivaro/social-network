@@ -1,5 +1,6 @@
 import axios from "axios"
 import {ProfileType, UserType} from "../types/entities";
+import {UpdateProfileDataType} from "../components/Profile/ProfileInfo/ProfileDataForm";
 
 const instance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.0/",
@@ -78,6 +79,14 @@ export const authAPI = {
     }
 }
 
+
+export type PhotoType<T = {}> = {
+    data: T
+    fieldsErrors: []
+    messages: string[]
+    resultCode: number
+
+}
 export const profileAPI = {
     getProfile: (userId: number) => {
         return instance.get<ProfileType>(`profile/${userId}`)
@@ -90,5 +99,15 @@ export const profileAPI = {
     putStatus: (status: string) => {
         return instance.put<SuccessfulType>(`profile/status`, {status})
             .then(response => response.data.resultCode)
+    },
+    putPhoto: (image: File) => {
+        const formData = new FormData()
+        formData.append('image', image)
+        return instance.put<PhotoType<{ photos: { small: string, large: string } }>>('profile/photo', formData, {headers: {'Content-Type': 'multipart/form-data'}})
+            .then(response => response.data)
+    },
+    putProfileData: (data: UpdateProfileDataType) => {
+        return instance.put<SuccessfulType>('profile', data)
+            .then(res => res.data)
     }
 }

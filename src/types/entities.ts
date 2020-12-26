@@ -6,24 +6,25 @@ export type InferActionTypes<T extends { [key: string]: (...arg: any[]) => any }
 
 
 export type ProfileType = {
-    "aboutMe": string
-    "contacts": {
-        "facebook": string
-        "website": string
-        "vk": string
-        "twitter": string
-        "instagram": string
-        "youtube": string
-        "github": string
-        "mainLink": string
+    aboutMe: string
+    contacts: {
+        [index: string]: string
+        facebook: string
+        website: string
+        vk: string
+        twitter: string
+        instagram: string
+        youtube: string
+        github: string
+        mainLink: string
     }
-    "lookingForAJob": string
-    "lookingForAJobDescription": string
-    "fullName": string
-    "userId": number
-    "photos": {
-        "small": string
-        "large": string
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId: number
+    photos: {
+        small: string
+        large: string
     }
 }
 

@@ -2,6 +2,7 @@ import {Reducer} from "redux";
 import {InferActionTypes, ProfileType} from "../types/entities";
 import {profileAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
+import {UpdateProfileDataType} from "../components/Profile/ProfileInfo/ProfileDataForm";
 
 export type InitialStateType = typeof initialState
 
@@ -41,6 +42,10 @@ export const profileReducer: Reducer<InitialStateType, ActionTypes> = (state = i
             return {
                 ...state, statusObj: action.statusObj, isSuccessStatus: action.isSuccessStatus
             }
+        case "CHANGE_PHOTO":
+            return {
+                ...state, profile: {...state.profile, photos: {large: action.data.large, small: action.data.small}}
+            }
         default:
             return state
     }
@@ -53,6 +58,7 @@ export const actions = {
     addPostActionCreator: (newPost: string) => ({type: "ADD_POST", newPost} as const),
     setUserProfile: (profile: ProfileType) => ({type: "SET_USER_PROFILE", profile} as const),
     setStatus: (statusObj: {status: string}) => ({type: "SET_STATUS", statusObj, isSuccessStatus: true} as const),
+    changePhoto: (data: {small: string, large: string}) => ({type: "CHANGE_PHOTO", data} as const),
 }
 
 export const thunks = {
@@ -75,6 +81,25 @@ export const thunks = {
         profileAPI.putStatus(status).then(resultCode => {
             if (resultCode === 0) {
                 dispatch(actions.setStatus({status}))
+            }
+        })
+    },
+    updatePhoto: (image: File): AppThunk => dispatch => {
+        profileAPI.putPhoto(image).then(({resultCode,data}) => {
+            if(resultCode === 0) {
+                dispatch(actions.changePhoto(data.photos))
+            }
+        })
+    },
+    updateProfileData: (data: UpdateProfileDataType): AppThunk=> (dispatch, getState) => {
+        const userId = getState().ProfilePage.profile.userId
+        profileAPI.putProfileData(data).then(res => {
+            if(res.resultCode === 0){
+                profileAPI.getProfile(userId)
+                    .then(data => {
+                        dispatch(actions.setUserProfile(data))
+                    })
+
             }
         })
     }

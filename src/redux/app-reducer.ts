@@ -27,7 +27,6 @@ export const actions = {
 export const thunks = {
     initializedApp: (): AppThunk => (dispatch) => {
         const promise = dispatch(thunksAuth.authTC())
-        console.log('Class: thunks, Function: response promise, Line: 31 promise(authTC):', promise);
         Promise.all([promise]).then(() => dispatch(actions.initializedSuccess()))
 
     }
