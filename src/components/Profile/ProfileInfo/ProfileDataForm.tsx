@@ -1,13 +1,5 @@
 import React, {useCallback} from 'react';
-import {
-	Field,
-	FormErrors,
-	FormSubmitHandler,
-	InjectedFormProps,
-	reduxForm,
-	SubmissionError,
-	WrappedFieldProps
-} from 'redux-form'
+import {Field, FormSubmitHandler, InjectedFormProps, reduxForm, SubmissionError, WrappedFieldProps} from 'redux-form'
 
 type PropsType = {
 	contacts: ContactsPropsType
@@ -23,7 +15,6 @@ export type UpdateProfileDataType = {
 }
 
 export type ContactsPropsType = {
-	[index: string]: string
 	facebook: string
 	github: string
 	instagram: string
@@ -35,10 +26,10 @@ export type ContactsPropsType = {
 }
 
 type ErrorType = {
-	[index: string]: string
 	fullName: string
 	aboutMe: string
 	lookingForAJobDescription: string
+	contacts?: ContactsPropsType
 }
 
 
@@ -53,8 +44,10 @@ let ProfileDataForm: React.FC<InjectedFormProps<UpdateProfileDataType, PropsType
 			contacts
 		}) => {
 
-		{/*TODO typing fo error any */}
-		let error: FormErrors<ErrorType, ContactsPropsType | string | any> = {
+		let error: ErrorType = {
+			lookingForAJobDescription: '',
+			aboutMe: '',
+			fullName: '',
 			contacts: {
 				facebook: '',
 				github: '',
@@ -66,37 +59,33 @@ let ProfileDataForm: React.FC<InjectedFormProps<UpdateProfileDataType, PropsType
 				youtube: '',
 			}
 		}
+
 		let isError = false
 
 		const requiredFieldValidator = (field: ErrorType) => {
-			let keys = Object.keys(field)
-
-			for (let i = 0; i < keys.length; i++) {
-				if (field[keys[i]] === null || String(field[keys[i]]).trim() === '') {
-					error[keys[i]] = 'Required'
+			(Object.keys(field) as Array<keyof typeof field>).forEach(key => {
+				if ((field[key] === null || String(field[key]).trim() === '') && key !== 'contacts') {
+					error[key] = 'Required'
 					isError = true
 				}
-			}
+			})
 		}
-
 		requiredFieldValidator({fullName, aboutMe, lookingForAJobDescription})
 
-		const urlValidator = (cn: ContactsPropsType) => {
-			let keys = Object.keys(cn)
-			const urlRegExpValidator = /^(https?|ftp|torrent|image|irc):\/\/(-\.)?([^\s\/?\.#-]+\.?)+(\/[^\s]*)?$/i
-			for (let i = 0; i < keys.length; i++) {
-				if (cn[keys[i]]?.trim() && !urlRegExpValidator.test(`${cn[keys[i]]}`)) {
-					error.contacts[keys[i]] = 'Invalid url format'
+		const urlValidator = (contacts: ContactsPropsType) => {
+			(Object.keys(contacts) as Array<keyof typeof contacts>).forEach(key => {
+				const urlRegExpValidator = /^(https?|ftp|torrent|image|irc):\/\/(-\.)?([^\s\/?.#-]+\.?)+(\/[^\s]*)?$/i
+				if (contacts[key]?.trim() && !urlRegExpValidator.test(`${contacts[key]}`) && error.contacts) {
+					error.contacts[key] = 'Invalid url format'
 					isError = true
 				}
-			}
+			})
 		}
 		urlValidator(contacts)
 
 		if (isError) {
 			throw new SubmissionError<ErrorType, ContactsPropsType | string>(error)
 		} else {
-			// submit form to server
 			updateProfileData({
 				fullName,
 				lookingForAJob,

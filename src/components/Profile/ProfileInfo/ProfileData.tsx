@@ -15,7 +15,7 @@ export const ProfileData: React.FC<PropsType> = ({setEditMode ,profile: {looking
 			<p><span>Professional skills: </span>{lookingForAJobDescription}</p>
 			<p>Contacts:</p>
 			<ul>
-				{Object.keys(contacts).map(key => (
+				{(Object.keys(contacts) as Array<keyof typeof contacts>).map(key => (
 					<li key={key}><span>{`${key}: `}</span><a href={contacts[key]}>{contacts[key]}</a></li>
 				))}
 			</ul>
