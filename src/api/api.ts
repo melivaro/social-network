@@ -69,8 +69,8 @@ export const authAPI = {
         return instance.get<AuthType<AuthMeType>>("auth/me")
             .then(response => response.data)
     },
-    login: (email: string, password: string, rememberMe: boolean = false) => {
-        return instance.post<AuthType<{ userId: number }>>("auth/login", {email, password, rememberMe})
+    login: (email: string, password: string, rememberMe: boolean = false, captcha: string = '') => {
+        return instance.post<AuthType<{ userId: number }>>("auth/login", {email, password, rememberMe, captcha})
             .then(res => res.data)
     },
     logout: () => {
@@ -109,5 +109,11 @@ export const profileAPI = {
     putProfileData: (data: UpdateProfileDataType) => {
         return instance.put<SuccessfulType>('profile', data)
             .then(res => res.data)
+    }
+}
+
+export const securityAPI = {
+    getCaptcha: () => {
+        return instance.get<{url: string}>('security/get-captcha-url').then(res => res.data)
     }
 }
