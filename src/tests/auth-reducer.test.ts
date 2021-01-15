@@ -6,6 +6,7 @@ test('set user data should be isAuth truthy', ()=>{
         login: null,
         email: null,
         isAuth: false,
+        captchaUrl: ''
     }
 
     const authUserData = {
@@ -13,6 +14,7 @@ test('set user data should be isAuth truthy', ()=>{
         login: 'feel',
         email: 'feel@gmail.com',
         isAuth: true,
+        captchaUrl: '',
     }
     const action=actions.setAuthUserData(authUserData)
     const finalState = authReducer(initialAuthUserData, action)

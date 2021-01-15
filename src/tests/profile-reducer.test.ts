@@ -38,7 +38,7 @@ test("posts should be new length array", ()=> {
             "github": 'ghpg.com',
             "mainLink": 'linkEdin',
         },
-        "lookingForAJob": 'yeas',
+        "lookingForAJob": false,
         "lookingForAJobDescription": 'React',
         "fullName": 'Feofan',
         "userId": 777,

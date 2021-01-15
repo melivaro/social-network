@@ -4,6 +4,11 @@ import {profileAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
 import {UpdateProfileDataType} from "../components/Profile/ProfileInfo/ProfileDataForm";
 
+const ADD_POST = 'profile-reducer/ADD_POST'
+const SET_USER_PROFILE = 'profile-reducer/SET_USER_PROFILE'
+const SET_STATUS = 'profile-reducer/SET_STATUS'
+const CHANGE_PHOTO = 'profile-reducer/CHANGE_PHOTO'
+
 export type InitialStateType = typeof initialState
 
 type PostType = {
@@ -25,7 +30,7 @@ const initialState = {
 
 export const profileReducer: Reducer<InitialStateType, ActionTypes> = (state = initialState, action): InitialStateType => {
     switch (action.type) {
-        case "ADD_POST":
+        case ADD_POST:
             return {
                 ...state,
                 posts: [...state.posts, {
@@ -34,15 +39,15 @@ export const profileReducer: Reducer<InitialStateType, ActionTypes> = (state = i
                     likesCounter: 0
                 }],
             }
-        case "SET_USER_PROFILE":
+        case SET_USER_PROFILE:
             return {
                 ...state, profile: action.profile
             }
-        case "SET_STATUS":
+        case SET_STATUS:
             return {
                 ...state, statusObj: action.statusObj, isSuccessStatus: action.isSuccessStatus
             }
-        case "CHANGE_PHOTO":
+        case CHANGE_PHOTO:
             return {
                 ...state, profile: {...state.profile, photos: {large: action.data.large, small: action.data.small}}
             }
@@ -53,12 +58,11 @@ export const profileReducer: Reducer<InitialStateType, ActionTypes> = (state = i
 
 export type ActionTypes = InferActionTypes<typeof actions>
 
-
 export const actions = {
-    addPostActionCreator: (newPost: string) => ({type: "ADD_POST", newPost} as const),
-    setUserProfile: (profile: ProfileType) => ({type: "SET_USER_PROFILE", profile} as const),
-    setStatus: (statusObj: {status: string}) => ({type: "SET_STATUS", statusObj, isSuccessStatus: true} as const),
-    changePhoto: (data: {small: string, large: string}) => ({type: "CHANGE_PHOTO", data} as const),
+    addPostActionCreator: (newPost: string) => ({type: ADD_POST, newPost} as const),
+    setUserProfile: (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const),
+    setStatus: (statusObj: { status: string }) => ({type: SET_STATUS, statusObj, isSuccessStatus: true} as const),
+    changePhoto: (data: { small: string, large: string }) => ({type: CHANGE_PHOTO, data} as const),
 }
 
 export const thunks = {
@@ -99,7 +103,6 @@ export const thunks = {
                     .then(data => {
                         dispatch(actions.setUserProfile(data))
                     })
-
             }
         })
     }

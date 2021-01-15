@@ -8,7 +8,7 @@ export type InferActionTypes<T extends { [key: string]: (...arg: any[]) => any }
 export type ProfileType = {
     aboutMe: string
     contacts: {
-        [index: string]: string
+        // [index: string]: string
         facebook: string
         website: string
         vk: string

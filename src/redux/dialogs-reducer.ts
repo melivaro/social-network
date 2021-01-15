@@ -1,6 +1,8 @@
 import {Reducer} from "redux";
 import {DialogType, InferActionTypes, MessageType} from "../types/entities";
 
+const SEND_MESSAGE = 'dialogs-reducer/SEND_MESSAGE'
+
 export type InitialStateType = typeof initialState
 
 const initialState = {
@@ -11,16 +13,17 @@ const initialState = {
         {id: 4, name: "Victor"},
     ] as Array<DialogType>,
     messages: [
-        {id: 1, message: "Haudy ho!"},
+        {id: 1, message: "Hi!"},
         {id: 2, message: "YO"},
         {id: 3, message: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, similique?"},
         {id: 4, message: "Lorem ipsum dolor sit amet."},
     ] as Array<MessageType>,
 }
 
+
 export const dialogsReducer: Reducer<InitialStateType, ActionTypes> = (state = initialState, action): InitialStateType => {
     switch (action.type) {
-        case "SEND_MESSAGE":
+        case SEND_MESSAGE:
             return {
                 ...state,
                 messages: [...state.messages, {
@@ -36,5 +39,5 @@ export const dialogsReducer: Reducer<InitialStateType, ActionTypes> = (state = i
 export type ActionTypes = InferActionTypes<typeof actions>
 
 export const actions = {
-    sendMessageActionCreator: (message: string)=>({type: "SEND_MESSAGE", message}) as const,
+    sendMessageActionCreator: (message: string)=>({type: SEND_MESSAGE, message}) as const,
 }
