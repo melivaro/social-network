@@ -1,7 +1,8 @@
 import {Reducer} from "redux";
 import {InferActionTypes, UserType} from "../types/entities";
-import {ResultCodes, usersAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
+import {usersAPI} from "../api/usersAPI";
+import {ResultCodes} from "../api/api";
 
 const FOLLOW = "user-reducer/FOLLOW"
 const UNFOLLOW = "user-reducer/UNFOLLOW"

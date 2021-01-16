@@ -1,8 +1,9 @@
 import {Reducer} from "redux";
 import {InferActionTypes, ProfileType} from "../types/entities";
-import {profileAPI, ResultCodes} from "../api/api";
 import {AppThunk} from "./redux-store";
 import {UpdateProfileDataType} from "../components/Profile/ProfileInfo/ProfileDataForm";
+import {profileAPI} from "../api/profileAPI";
+import {ResultCodes} from "../api/api";
 
 const ADD_POST = 'profile-reducer/ADD_POST'
 const SET_USER_PROFILE = 'profile-reducer/SET_USER_PROFILE'

@@ -19,11 +19,11 @@ export type MapStatePropsType = {
 
 export const Dialogs = ({DialogPage, sendMessage}: PropsType) => {
 
-    let dialogItems = DialogPage.dialogs.map((d) => {
-        return <DialogItem key={d.id} id={d.id} name={d.name}/>
+    const dialogItems = DialogPage.dialogs.map(({id, name}) => {
+        return <DialogItem key={id} id={id} name={name}/>
     })
-    let messageItems = DialogPage.messages.map((m) => {
-        return  <MessageItem key={m.id} message={m.message} id={m.id}/>
+    const messageItems = DialogPage.messages.map(({id,message}) => {
+        return  <MessageItem key={id} message={message} id={id}/>
     })
 
     const addNewMessage = (formData: FormDataType) => {

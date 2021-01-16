@@ -4,7 +4,6 @@
 type PropertiesType<T> = T extends { [key: string]: infer U } ? U : never
 export type InferActionTypes<T extends { [key: string]: (...arg: any[]) => any }> = ReturnType<PropertiesType<T>>
 
-
 export type ProfileType = {
     aboutMe: string
     contacts: {
@@ -57,14 +56,3 @@ export type UserType = {
     // }
 }
 
-
-// import { initialState as DialogsPage } from "../redux/dialogs-reducer"
-// import { initialState as ProfilePage } from "../redux/profile-reducer"
-// import {initialState as UsersPage} from "../redux/user-reducer";
-
-// export type PageType<T> =
-//     T extends "Dialog" ? typeof DialogsPage.dialogs[0]
-//     : T extends "Message" ? typeof DialogsPage.messages[0]
-//         : T extends "Posts" ? typeof ProfilePage.posts[0]
-//             : T extends "User" ? typeof UsersPage.users[0]
-//                 : never

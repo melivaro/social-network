@@ -1,8 +1,10 @@
 import {InferActionTypes} from "../types/entities";
 import {Reducer} from "redux";
-import {authAPI, ResultCodes, ResultCodesForCaptcha, securityAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
 import {stopSubmit} from "redux-form";
+import {authAPI} from "../api/authAPI";
+import {securityAPI} from "../api/securityAPI";
+import {ResultCodes, ResultCodesForCaptcha} from "../api/api";
 
 const SET_USER_DATA = "auth-reducer/SET_USER_DATA"
 const SET_CAPTCHA_URL = "auth-reducer/SET_CAPTCHA_URL"
