@@ -1,6 +1,6 @@
 import {Reducer} from "redux";
 import {InferActionTypes, UserType} from "../types/entities";
-import {usersAPI} from "../api/api";
+import {ResultCodes, usersAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
 
 const FOLLOW = "user-reducer/FOLLOW"
@@ -92,7 +92,7 @@ export const thunks = {
         dispatch(toggleFollowingProgress(true, userId))
         postFollow(userId)
             .then(data => {
-                data.resultCode === 0 && dispatch(followSuccess(userId))
+                data.resultCode === ResultCodes.Success && dispatch(followSuccess(userId))
                 dispatch(toggleFollowingProgress(false, userId))
             })
     },
@@ -100,7 +100,7 @@ export const thunks = {
         dispatch(toggleFollowingProgress(true, userId))
         deleteUnfollow(userId)
             .then(data => {
-                data.resultCode === 0 && dispatch(unfollowSuccess(userId))
+                data.resultCode === ResultCodes.Success && dispatch(unfollowSuccess(userId))
                 dispatch(toggleFollowingProgress(false, userId))
             })
     },

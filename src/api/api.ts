@@ -10,6 +10,15 @@ const instance = axios.create({
     }
 })
 
+export enum ResultCodes {
+    Success = 0,
+    Error = 1,
+}
+
+export enum ResultCodesForCaptcha {
+    CaptchaRequired = 10,
+}
+
 export type UsersDataType = {
     error: null | string
     items: Array<UserType>
@@ -20,7 +29,7 @@ export type FollowType = {
     data: {}
     fieldsErrors: []
     messages: []
-    resultCode: number
+    resultCode: ResultCodes
 }
 
 export const usersAPI = {
@@ -54,7 +63,7 @@ export type AuthType<T = {}> = {
     data: T
     fieldsErrors: []
     messages: string[]
-    resultCode: number
+    resultCode: ResultCodes | ResultCodesForCaptcha
 
 }
 
@@ -84,7 +93,7 @@ export type PhotoType<T = {}> = {
     data: T
     fieldsErrors: []
     messages: string[]
-    resultCode: number
+    resultCode: ResultCodes
 
 }
 export const profileAPI = {

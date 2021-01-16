@@ -1,6 +1,6 @@
 import {Reducer} from "redux";
 import {InferActionTypes, ProfileType} from "../types/entities";
-import {profileAPI} from "../api/api";
+import {profileAPI, ResultCodes} from "../api/api";
 import {AppThunk} from "./redux-store";
 import {UpdateProfileDataType} from "../components/Profile/ProfileInfo/ProfileDataForm";
 
@@ -83,14 +83,14 @@ export const thunks = {
     },
     updateStatus: (status: string): AppThunk => dispatch => {
         profileAPI.putStatus(status).then(resultCode => {
-            if (resultCode === 0) {
+            if (resultCode === ResultCodes.Success) {
                 dispatch(actions.setStatus({status}))
             }
         })
     },
     updatePhoto: (image: File): AppThunk => dispatch => {
         profileAPI.putPhoto(image).then(({resultCode,data}) => {
-            if(resultCode === 0) {
+            if(resultCode === ResultCodes.Success) {
                 dispatch(actions.changePhoto(data.photos))
             }
         })
@@ -98,7 +98,7 @@ export const thunks = {
     updateProfileData: (data: UpdateProfileDataType): AppThunk=> (dispatch, getState) => {
         const userId = getState().ProfilePage.profile.userId
         profileAPI.putProfileData(data).then(res => {
-            if(res.resultCode === 0){
+            if(res.resultCode === ResultCodes.Success){
                 profileAPI.getProfile(userId)
                     .then(data => {
                         dispatch(actions.setUserProfile(data))

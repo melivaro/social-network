@@ -1,6 +1,6 @@
 import {InferActionTypes} from "../types/entities";
 import {Reducer} from "redux";
-import {authAPI, securityAPI} from "../api/api";
+import {authAPI, ResultCodes, ResultCodesForCaptcha, securityAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
 import {stopSubmit} from "redux-form";
 
@@ -41,14 +41,14 @@ export const actions = {
 export const thunks = {
     authTC: (): AppThunk => async dispatch => {
         const response = await authAPI.authMe()
-        response.resultCode === 0 && dispatch(actions.setAuthUserData({...response.data, isAuth: true, captchaUrl: ''}))
+        response.resultCode === ResultCodes.Success && dispatch(actions.setAuthUserData({...response.data, isAuth: true, captchaUrl: ''}))
     },
     login: (email: string, password: string, rememberMe: boolean, captcha: string): AppThunk => async (dispatch) => {
         const data = await authAPI.login(email, password, rememberMe, captcha)
-        if (data.resultCode === 0) {
+        if (data.resultCode === ResultCodes.Success) {
             dispatch(thunks.authTC())
         } else {
-            if (data.resultCode === 10) {
+            if (data.resultCode === ResultCodesForCaptcha.CaptchaRequired) {
                 dispatch(thunks.getCaptchaUrl())
             }
             data.messages.length !== 0 ?
@@ -58,7 +58,7 @@ export const thunks = {
     },
     logout: (): AppThunk => dispatch => {
         authAPI.logout()
-            .then(data => data.resultCode === 0 && dispatch(actions.setAuthUserData({
+            .then(data => data.resultCode === ResultCodes.Success && dispatch(actions.setAuthUserData({
                 id: null,
                 login: null,
                 email: null,
