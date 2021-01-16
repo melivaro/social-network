@@ -26,16 +26,8 @@ export const Users: React.FC<PropsType> = (
         followingInProgress,
     }
 ) => {
-    // const page: number = Math.ceil(totalCount / pageSize)
-    // const pages: Array<number> = []
-    // for (let i = 1; i <= page; i++) {
-    //     pages.push(i)
-    // }
-
     return (
         <div>
-            {/*{pages.map((p) => <span key={p.toString()} onClick={() => setCurrentPage(p)}*/}
-            {/*                        className={p === currentPage ? s.paginationSelected : s.pagination}>{p}</span>)}*/}
             <Pagination totalCountItems={totalCount} pageSize={pageSize} currentPage={currentPage} setCurrentPage={setCurrentPage} portionSize={10}/>
             {users.map((u: UserType) => <UserItem key={u.id} followingInProgress={followingInProgress} user={u}
                                                   unfollow={unfollow} follow={follow}/>)}</div>

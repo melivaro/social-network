@@ -17,7 +17,7 @@ export const Pagination: React.FC<PropsType> = ({pageSize, currentPage, totalCou
 	}
 
 	const totalCountPortion = Math.ceil(totalCountPage / portionSize) // общее кол-во проций
-	let [portionNumber, setPortionNumber] = useState(Math.ceil(currentPage / 10)) // номер порции и его изменение
+	let [portionNumber, setPortionNumber] = useState(Math.ceil(currentPage / portionSize)) // номер порции и его изменение
 	const leftPortion = (portionNumber - 1) * portionSize + 1 // левая граница проции
 	const rightPortion = portionNumber * portionSize // правая граница порции
 

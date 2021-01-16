@@ -16,7 +16,6 @@ export const ProfileStatusWithHooks: FC<PropsType> = React.memo( (
     const [localStatus, setLocalStatus] = useState(statusObj.status)
     const [loader, setLoader] = useState(false)
     useEffect(() => {
-        // setLocalStatus(status)
         setLoader(false)
     },[statusObj])
 
@@ -37,7 +36,6 @@ export const ProfileStatusWithHooks: FC<PropsType> = React.memo( (
 
     return (
         <div>
-
             {!editMode &&
             <div>
                 <span onDoubleClick={activateEditMode}>{statusObj.status || "no status"}</span>
@@ -47,7 +45,6 @@ export const ProfileStatusWithHooks: FC<PropsType> = React.memo( (
                 <input onChange={onChangeStatus} value={localStatus} type="text"
                        onBlur={deactivateEditMode} autoFocus/>
             </div>}
-
         </div>
     );
 } )

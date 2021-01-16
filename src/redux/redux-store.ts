@@ -23,6 +23,6 @@ let store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunkMi
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, Action<string>>
 
 // @ts-ignore
-window.store = store
+window.__store__ = store
 
 export default store
