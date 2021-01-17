@@ -10,8 +10,9 @@ type PropsType = MapDispatchPropsType & MapStatePropsType
 
 export const MyPosts = (props: PropsType) => {
 
-    let postItems = props.posts.map((p, index) => <Post key={`${p.id}+${index}`} id={p.id} message={p.message}
-                                                        likesCounter={p.likesCounter}/>)
+    let postItems = props.posts.map(({message, id, likesCounter}, index) => <Post key={`${id}+${index}`} id={id}
+                                                                                  message={message}
+                                                                                  likesCounter={likesCounter}/>)
 
     const onAddPost = (formData: FormDataType) => {
         props.addPost(formData.newPost)
@@ -36,10 +37,13 @@ type FormDataType = {
 const onHandlerMaxLength = maxLengthCreator(7);
 
 const AddNewPostForm: React.FC<InjectedFormProps<FormDataType>> = React.memo((props) => {
-    return <form onSubmit={props.handleSubmit} className={s.createPublication}>
-        <Field component={CustomField} name={"newPost"} placeholder={"Что у вас нового?"} validate={[required, onHandlerMaxLength]} fieldType={"textarea"}/>
-        <button>Add post</button>
-    </form>
+        return (
+            <form onSubmit={props.handleSubmit} className={s.createPublication}>
+                <Field component={CustomField} name={"newPost"} placeholder={"Что у вас нового?"}
+                       validate={[required, onHandlerMaxLength]} fieldType={"textarea"}/>
+                <button>Add post</button>
+            </form>
+        )
     }
 )
 const MyPostReduxForm = reduxForm<FormDataType>({
